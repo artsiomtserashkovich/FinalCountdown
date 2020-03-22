@@ -6,3 +6,5 @@ packages/
 .ionide/
 .idea/
 dist/
+.vscode/
+/.vscode
