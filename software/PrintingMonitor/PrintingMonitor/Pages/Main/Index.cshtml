@@ -4,7 +4,7 @@
     Layout = null;
 }
 
-@using PrintingMonitor
+@using PrintingMonitor.Pages.Main
 
 <!DOCTYPE html>
 <html lang="en">
@@ -18,7 +18,7 @@
 </head>
 <body>
     <app>
-        <component type="typeof(App)" render-mode="ServerPrerendered" />
+        <component type="typeof(MainRouter)" render-mode="ServerPrerendered" />
     </app>
 
     <div id="blazor-error-ui">

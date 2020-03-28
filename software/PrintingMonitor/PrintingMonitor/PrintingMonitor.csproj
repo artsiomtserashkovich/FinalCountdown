@@ -17,8 +17,7 @@
 
   <ItemGroup>
     <Folder Include="Pages\Connect\" />
-    <Folder Include="Pages\Dashboard\" />
-    <Folder Include="Pages\Shared\Navbar\" />
+    <Folder Include="Pages\Main\Shared\Navbar\" />
   </ItemGroup>
 
 </Project>

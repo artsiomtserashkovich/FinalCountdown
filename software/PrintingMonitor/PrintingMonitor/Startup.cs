@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using PrintingMonitor.Areas.Identity;
 using PrintingMonitor.Data;
 
 namespace PrintingMonitor
@@ -36,7 +35,7 @@ namespace PrintingMonitor
             services.AddRazorPages();
             services.AddServerSideBlazor();
 
-            services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
+            services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<ApplicationUser>>();
             services.AddSingleton<WeatherForecastService>();
         }
 
@@ -65,7 +64,7 @@ namespace PrintingMonitor
             {
                 endpoints.MapControllers();
                 endpoints.MapBlazorHub();
-                endpoints.MapFallbackToPage("/System/ApplicationError");
+                endpoints.MapFallbackToPage("/Main/Index");
             });
         }
     }
