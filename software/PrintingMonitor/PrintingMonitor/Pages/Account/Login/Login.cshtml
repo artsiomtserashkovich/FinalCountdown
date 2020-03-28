@@ -6,29 +6,23 @@
 @using PrintingMonitor.Pages.Login
 @model LoginPage
 
-<div class="row justify-content-md-center">
-    <div class="col-md-6">
-        <section>
-            <form id="account" method="post">
-                <h4>Use Admin account to log in.</h4>
-                <div asp-validation-summary="All" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Input.UserName"></label>
-                    <input asp-for="Input.UserName" class="form-control" />
-                    <span asp-validation-for="Input.UserName" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Input.Password"></label>
-                    <input asp-for="Input.Password" class="form-control" />
-                    <span asp-validation-for="Input.Password" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Log in</button>
-                </div>
-            </form>
-        </section>
-    </div>
-</div>
+
+    <form id="account" method="post" class="form-signin mt-4">
+        <img class="mb-4" src="~/images/icon.png" alt="" width="144" height="144">
+        <h1 class="h3 mb-4">Please log in to printer</h1>
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <label asp-for="Input.UserName" class="sr-only">UserName</label>
+        <input asp-for="Input.UserName" class="form-control" placeholder="UserName" required autofocus />
+        <span asp-validation-for="Input.UserName" class="text-danger"></span>
+
+        <label asp-for="Input.Password" class="sr-only">Password</label>
+        <input asp-for="Input.Password" class="form-control" placeholder="Password" required />
+        <span asp-validation-for="Input.Password" class="text-danger"></span>
+
+        <button type="submit" class="btn btn-lg btn-secondary btn-block">Log in</button>
+
+    </form>
 
 @section Scripts {
     <partial name="LoginValidationScripts" />
