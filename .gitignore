@@ -10,3 +10,6 @@ models/
 tools/
 /tools
 
+/software/PrintingMonitor/.vs/PrintingMonitor
+/software/PrintingMonitor/PrintingMonitor/bin/Debug/netcoreapp3.1
+/software/PrintingMonitor/PrintingMonitor/obj
