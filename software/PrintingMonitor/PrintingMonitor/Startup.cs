@@ -65,7 +65,7 @@ namespace PrintingMonitor
             {
                 endpoints.MapControllers();
                 endpoints.MapBlazorHub();
-                endpoints.MapFallbackToPage("/_Host");
+                endpoints.MapFallbackToPage("/System/ApplicationError");
             });
         }
     }
