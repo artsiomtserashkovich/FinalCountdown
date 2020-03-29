@@ -1,8 +1,7 @@
 ﻿<CascadingAuthenticationState>
     <Router AppAssembly="@typeof(Program).Assembly">
         <Found Context="routeData">
-            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
-            </AuthorizeRouteView>
+            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
         </Found>
         <NotFound>
             <RedirectTo Path="/notfound"/>

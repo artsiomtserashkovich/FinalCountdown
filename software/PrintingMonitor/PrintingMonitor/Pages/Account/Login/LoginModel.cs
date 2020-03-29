@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace PrintingMonitor.Pages.Login
+namespace PrintingMonitor.Pages.Account.Login
 {
     public class LoginModel
     {

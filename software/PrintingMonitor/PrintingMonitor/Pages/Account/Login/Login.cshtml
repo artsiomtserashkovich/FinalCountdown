@@ -1,29 +1,19 @@
 ﻿@page "/login"
 @{
-    Layout = "AccountLayout";
+    Layout = "FormValidationLayou/FormValidationLayout";
 }
-
-@using PrintingMonitor.Pages.Login
 @model LoginPage
+@using PrintingMonitor.Pages.Account.Login
 
 
-    <form id="account" method="post" class="form-signin mt-4">
-        <img class="mb-4" src="~/images/icon.png" alt="" width="144" height="144">
-        <h1 class="h3 mb-4">Please log in to printer</h1>
-        <div asp-validation-summary="All" class="text-danger"></div>
 
-        <label asp-for="Input.UserName" class="sr-only">UserName</label>
-        <input asp-for="Input.UserName" class="form-control" placeholder="UserName" required autofocus />
-        <span asp-validation-for="Input.UserName" class="text-danger"></span>
+<h1 class="h3 mb-4">Please log in to printer</h1>
+<div asp-validation-summary="All" class="alert-danger h5"></div>
 
-        <label asp-for="Input.Password" class="sr-only">Password</label>
-        <input asp-for="Input.Password" class="form-control" placeholder="Password" required />
-        <span asp-validation-for="Input.Password" class="text-danger"></span>
+<label asp-for="Input.UserName" class="sr-only">UserName</label>
+<input asp-for="Input.UserName" class="form-control" placeholder="UserName" required autofocus />
 
-        <button type="submit" class="btn btn-lg btn-secondary btn-block">Log in</button>
+<label asp-for="Input.Password" class="sr-only">Password</label>
+<input asp-for="Input.Password" class="form-control" placeholder="Password" required />
 
-    </form>
-
-@section Scripts {
-    <partial name="LoginValidationScripts" />
-}
+<button type="submit" class="btn btn-lg btn-secondary btn-block">Log in</button>

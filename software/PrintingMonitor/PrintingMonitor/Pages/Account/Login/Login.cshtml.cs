@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PrintingMonitor.Data;
 
-namespace PrintingMonitor.Pages.Login
+namespace PrintingMonitor.Pages.Account.Login
 {
     [AllowAnonymous]
     public class LoginPage : PageModel

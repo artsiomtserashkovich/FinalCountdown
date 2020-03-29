@@ -28,15 +28,16 @@ namespace PrintingMonitor
             services.AddDefaultIdentity<ApplicationUser>()
                 .AddUserStore<OptionsUserStore>();
 
-            services.AddOptions().Configure<SecurityOptions>(Configuration.GetSection("SecurityOptions"));
+            services.AddOptions()
+                .Configure<SecurityOptions>(Configuration.GetSection("SecurityOptions"));
 
             services.AddTransient<IUserPasswordStore<ApplicationUser>, OptionsUserStore>();
 
             services.AddRazorPages();
             services.AddServerSideBlazor();
 
+            services.AddSingleton<IPrinterConnection, StubPrinterConnection>();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<ApplicationUser>>();
-            services.AddSingleton<WeatherForecastService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -44,7 +45,6 @@ namespace PrintingMonitor
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
             }
             else
             {
