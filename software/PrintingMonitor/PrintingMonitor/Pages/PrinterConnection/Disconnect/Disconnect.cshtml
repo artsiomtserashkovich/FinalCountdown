@@ -1,0 +1,18 @@
+﻿@page "/disconnect"
+
+@using PrintingMonitor.Data
+
+@attribute [IgnoreAntiforgeryToken]
+@inject IPrinterConnection Connection
+
+@functions {
+    public IActionResult OnPost()
+    {
+        if (Connection.IsConnected)
+        {
+            Connection.IsConnected = false;
+        }
+
+        return Redirect("/");
+    }
+}

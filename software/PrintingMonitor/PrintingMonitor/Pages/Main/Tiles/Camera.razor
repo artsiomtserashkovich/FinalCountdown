@@ -1,0 +1,29 @@
+﻿@using OpenCvSharp;
+
+<Tile Title="Camera" SizeClasses="col-xl-4 col-md-6 mb-4">
+    <img src="@_imgSrc" class="img-fluid rounded mx-auto d-block" alt="Stream"/>
+</Tile>
+
+@code {
+    private string _imgSrc;
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        using (var capture = new VideoCapture(0))
+        using (var frame = new Mat())
+        {
+            while (true)
+            {
+                capture.Read(frame);
+
+                var base64 = Convert.ToBase64String(frame.ToBytes());
+                _imgSrc = $"data:image/gif;base64,{base64}";
+
+                Task.Delay(300).Wait();
+
+                StateHasChanged();
+            }
+        }
+    }
+
+}

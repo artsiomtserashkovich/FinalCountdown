@@ -1,0 +1,21 @@
+﻿<div class="@SizeClasses">
+    <div class="card shadow equal">
+        <h5 class="card-header">@Title</h5>
+        <div class="card-body">
+            <div clas="container">
+                @ChildContent
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public string SizeClasses { get; set; }
+}

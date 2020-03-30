@@ -1,0 +1,22 @@
+﻿@page "/connect"
+@{
+    Layout = "FormValidationLayout/FormValidationLayout";
+}
+@model ConnectPage
+@using PrintingMonitor.Pages.PrinterConnection.Connect
+
+
+
+<h1 class="h3 mb-4">Please connect to printer</h1>
+<div asp-validation-summary="All" class="alert-danger h5"></div>
+
+<label asp-for="Input.ComPortName" class="sr-only">Com Port:</label>
+<select asp-for="Input.ComPortName" asp-items="@Model.AvailableComPorts" class="form-control form-firstfield">
+    <option value="">Select Com Port</option>
+</select>
+<label asp-for="Input.BaudRate" class="sr-only">BaudRate:</label>
+<select asp-for="Input.BaudRate" asp-items="@Model.AvailableBaudRates" class="form-control form-secondfield">
+    <option value="">Select BaudRate</option>
+</select>
+
+<button type="submit" class="btn btn-lg btn-secondary btn-block">Connect</button>

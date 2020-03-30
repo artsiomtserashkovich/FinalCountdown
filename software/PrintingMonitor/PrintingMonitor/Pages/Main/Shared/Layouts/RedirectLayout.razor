@@ -1,0 +1,22 @@
+﻿@using PrintingMonitor.Data
+@inherits LayoutComponentBase
+
+@inject IPrinterConnection Connection
+
+
+<AuthorizeView>
+    <Authorized>
+        @if (Connection.IsConnected)
+        {
+            @Body
+        }
+        else
+        {
+            <RedirectTo Path="/connect" />
+        }
+    </Authorized>
+    <NotAuthorized>
+        <RedirectTo Path="/login"/>
+    </NotAuthorized>
+</AuthorizeView>
+

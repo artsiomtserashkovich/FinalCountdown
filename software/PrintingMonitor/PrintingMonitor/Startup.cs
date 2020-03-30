@@ -33,7 +33,11 @@ namespace PrintingMonitor
 
             services.AddTransient<IUserPasswordStore<ApplicationUser>, OptionsUserStore>();
 
-            services.AddRazorPages();
+            services.AddRazorPages().AddRazorPagesOptions(options =>
+                {
+                    options.Conventions.AuthorizePage("/Account/Login/Login");
+                });
+
             services.AddServerSideBlazor();
 
             services.AddSingleton<IPrinterConnection, StubPrinterConnection>();

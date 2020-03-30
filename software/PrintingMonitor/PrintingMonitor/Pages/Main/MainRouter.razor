@@ -1,7 +1,9 @@
-﻿<CascadingAuthenticationState>
+﻿@using PrintingMonitor.Pages.Main.Shared.Layouts
+
+<CascadingAuthenticationState>
     <Router AppAssembly="@typeof(Program).Assembly">
         <Found Context="routeData">
-            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(NavBarLayout)" />
         </Found>
         <NotFound>
             <RedirectTo Path="/notfound"/>
