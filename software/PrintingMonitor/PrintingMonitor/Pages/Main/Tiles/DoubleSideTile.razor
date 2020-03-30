@@ -1,0 +1,26 @@
+﻿<Tile Title=@Title SizeClasses=@SizeClasses>
+    <div class="row d-flex align-items-end">
+        <div class="col-xl-6 col-lg-6 col-12">
+            @LeftSideContent
+        </div>
+        <div class="col-xl-6 col-lg-6 col-12">
+            @RightSideContent
+        </div>
+    </div>
+</Tile>
+
+
+@code {
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public RenderFragment LeftSideContent { get; set; }
+
+    [Parameter]
+    public RenderFragment RightSideContent { get; set; }
+
+    [Parameter]
+    public string SizeClasses { get; set; }
+
+}
