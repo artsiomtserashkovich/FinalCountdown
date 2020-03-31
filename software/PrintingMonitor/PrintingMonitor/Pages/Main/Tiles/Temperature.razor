@@ -1,3 +1,64 @@
-﻿<Tile Title="Temperature" SizeClasses="col-xl-4 col-md-6 mb-4">
-    <h1>Temperature content</h1>
-</Tile>
+﻿<DoubleSideTile Title="Temperature"
+                AlignContentCenter
+                SizeClasses="col-xl-5 col-md-6 mb-4"
+                LeftSideSizeClasses="col-xl-4 col-lg-4 col-12"
+                RightSideSizeClasses="col-xl-8 col-lg-8 col-12">
+    <LeftSideContent>
+        <div class="row d-flex justify-content-center">
+            <h6>Bed Temperature:</h6>
+        </div>
+        <div class="row d-flex justify-content-center mb-4">
+            <h6>Current: 36.3; Target: 42</h6>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <h6>Hotend Temperature:</h6>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <h6>Current: 36.3; Target: 42</h6>
+        </div>
+    </LeftSideContent>
+    <RightSideContent>
+        <div class="row d-flex justify-content-center">
+            <h6>Set Bed Temperature:</h6>
+        </div>
+        <div class="row  mb-4">
+            <div class="col-xl-5">
+                <input class="form-control" type="number" value="42" id="example-number-input">
+            </div>
+            <div class="col-xl-3">
+                <button type="button" class="btn btn-secondary oi oi-check w-100"> Set</button>
+            </div>
+            <div class="col-xl-4">
+                <button type="button" class="btn btn-secondary oi oi-x w-100"> Turn off</button>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <h6>Set Hotend Temperature:</h6>
+        </div>
+        <div class="row  mb-4">
+            <div class="col-xl-5">
+                <input class="form-control" type="number" value="42" id="example-number-input">
+            </div>
+            <div class="col-xl-3">
+                <button type="button" class="btn btn-secondary oi oi-check w-100"> Set</button>
+            </div>
+            <div class="col-xl-4">
+                <button type="button" class="btn btn-secondary oi oi-x w-100"> Turn off</button>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <h6>Set Fan Speed:</h6>
+        </div>
+        <div class="row">
+            <div class="col-xl-5">
+                <input class="form-control" type="number" value="42" id="example-number-input">
+            </div>
+            <div class="col-xl-3">
+                <button type="button" class="btn btn-secondary oi oi-check w-100"> Set</button>
+            </div>
+            <div class="col-xl-4">
+                <button type="button" class="btn btn-secondary oi oi-x w-100"> Turn off</button>
+            </div>
+        </div>
+    </RightSideContent>
+</DoubleSideTile>

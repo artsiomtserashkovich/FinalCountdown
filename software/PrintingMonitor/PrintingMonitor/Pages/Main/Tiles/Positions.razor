@@ -1,14 +1,47 @@
-﻿<Tile Title="Positions" SizeClasses="col-xl-4 col-md-6 mb-4">
-    <div class="row d-flex justify-content-center">
-        <h6>X: 0.0</h6>
-    </div>
-    <div class="row">
-        <h6>Y: 120.0</h6>
-    </div>
-    <div class="row">
-        <h6>Z: 210.0</h6>
-    </div>
-    <div class="row">
-        <h6>E: 120.0</h6>
-    </div>
-</Tile>
+﻿<DoubleSideTile 
+    Title="Positions" 
+    AlignContentCenter
+    SizeClasses="col-xl-3 col-md-6 mb-4"
+    LeftSideSizeClasses="col-xl-4 col-lg-4 col-12"
+    RightSideSizeClasses="col-xl-8 col-lg-8 col-12">
+    <LeftSideContent>
+        <div class="row d-flex justify-content-center mb-4">
+            <h6>Current X: 0.0</h6>
+        </div>
+        <div class="row d-flex justify-content-center mb-4">
+            <h6>Current Y: 120.0</h6>
+        </div>
+        <div class="row d-flex justify-content-center mb-4">
+            <h6>Current Z: 210.0</h6>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <h6>Current E: 120.0</h6>
+        </div>
+    </LeftSideContent>
+    <RightSideContent>
+        <div class="row  mb-4">
+            <div class="col">
+                <button type="button" class="btn btn-secondary oi oi-home w-100"> Home X</button>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-secondary oi oi-home w-100"> Home X/Y</button>
+            </div>
+        </div>
+        <div class="row  mb-4">
+            <div class="col">
+                <button type="button" class="btn btn-secondary oi oi-home w-100"> Home Y</button>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-secondary oi oi-home w-100"> Home All</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <button type="button" class="btn btn-secondary oi oi-home w-100"> Home Z</button>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-secondary oi oi-justify-center w-100"> Bed leveling</button>
+            </div>
+        </div>
+    </RightSideContent>
+</DoubleSideTile>

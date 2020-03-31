@@ -1,84 +1,85 @@
-﻿<Tile Title="Movement" SizeClasses="col-xl-4 col-md-6 mb-4">
-    <div class="row d-flex align-items-end">
-        <div class="col-xl-6 col-lg-6 col-12">
-            <div class="row mb-4">
-                <div class="col">
-                    <div class="row m-2">
-                        <div class="col d-flex justify-content-center">
-                            <button type="button" class="btn btn-dark oi oi-arrow-thick-top px-6 py-2" />
-                        </div>
-                    </div>
-                    <div class="row m-2">
-                        <div class="col d-flex justify-content-end mr-2">
-                            <button type="button" class="btn btn-dark oi oi-arrow-thick-left" />
-                        </div>
-                        <div class="col d-flex justify-content-start ml-2">
-                            <button type="button" class="btn btn-dark oi oi-arrow-thick-right" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col d-flex justify-content-center">
-                            <button type="button" class="btn btn-dark oi oi-arrow-thick-bottom px-6 py-2" />
-                        </div>
+﻿<DoubleSideTile Title="Movement" SizeClasses="col-xl-4 col-md-6 mb-4">
+    <LeftSideContent>
+        <div class="row mb-4">
+            <div class="col">
+                <div class="row m-2 d-box justify-content-center">
+                    <h6>X/Y axis:</h6>
+                </div>
+                <div class="row m-2">
+                    <div class="col d-flex justify-content-center">
+                        <button type="button" class="btn btn-dark oi oi-arrow-thick-top px-6 py-2" />
                     </div>
                 </div>
-            </div>
-            <div class="row d-box justify-content-center">
-                <div class="col">
-                    X/Y movement steps:
+                <div class="row m-2">
+                    <div class="col d-flex justify-content-end mr-2">
+                        <button type="button" class="btn btn-dark oi oi-arrow-thick-left" />
+                    </div>
+                    <div class="col d-flex justify-content-start ml-2">
+                        <button type="button" class="btn btn-dark oi oi-arrow-thick-right" />
+                    </div>
                 </div>
-                <div class="w-100"></div>
-                <div class="col">
-                    <select class="form-control form-control-sm">
-                        <option>0.1</option>
-                        <option>1</option>
-                        <option>10</option>
-                        <option>100</option>
-                    </select>
+                <div class="row">
+                    <div class="col d-flex justify-content-center">
+                        <button type="button" class="btn btn-dark oi oi-arrow-thick-bottom px-6 py-2" />
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-xl-6 col-lg-6 col-12">
-            <div class="row mb-4">
-                <div class="col">
-                    <div class="row m-2 d-box justify-content-center">
-                        <h6>Z axis:</h6>
+        <div class="row d-box justify-content-center">
+            <div class="col">
+                X/Y movement steps:
+            </div>
+            <div class="w-100"></div>
+            <div class="col">
+                <select class="form-control form-control-sm">
+                    <option>0.1</option>
+                    <option>1</option>
+                    <option>10</option>
+                    <option>100</option>
+                </select>
+            </div>
+        </div>
+    </LeftSideContent>
+    <RightSideContent>
+        <div class="row mb-4">
+            <div class="col">
+                <div class="row m-2 d-box justify-content-center">
+                    <h6>Z axis:</h6>
+                </div>
+                <div class="row m-2">
+                    <div class="col d-flex justify-content-end mr-2">
+                        <button type="button" class="btn btn-dark oi oi-arrow-thick-left" />
                     </div>
-                    <div class="row m-2">
-                        <div class="col d-flex justify-content-end mr-2">
-                            <button type="button" class="btn btn-dark oi oi-arrow-thick-left" />
-                        </div>
-                        <div class="col d-flex justify-content-start ml-2">
-                            <button type="button" class="btn btn-dark oi oi-arrow-thick-right" />
-                        </div>
-                    </div>
-                    <div class="row m-2 d-box justify-content-center">
-                        <h6>Hotend:</h6>
-                    </div>
-                    <div class="row m-2">
-                        <div class="col d-flex justify-content-end mr-2">
-                            <button type="button" class="btn btn-dark oi oi-arrow-thick-left" />
-                        </div>
-                        <div class="col d-flex justify-content-start ml-2">
-                            <button type="button" class="btn btn-dark oi oi-arrow-thick-right" />
-                        </div>
-                    </div>
+                    <div class="col d-flex justify-content-start ml-2">
+                        <button type="button" class="btn btn-dark oi oi-arrow-thick-right" />
                     </div>
                 </div>
-            <div class="row d-box justify-content-center">
-                <div class="col">
-                    Z/Extruder movement steps:
+                <div class="row m-2 d-box justify-content-center">
+                    <h6>Hotend:</h6>
                 </div>
-                <div class="w-100"></div>
-                <div class="col">
-                    <select class="form-control form-control-sm">
-                        <option>0.1</option>
-                        <option>1</option>
-                        <option>10</option>
-                        <option>100</option>
-                    </select>
+                <div class="row m-2">
+                    <div class="col d-flex justify-content-end mr-2">
+                        <button type="button" class="btn btn-dark oi oi-arrow-thick-left" />
+                    </div>
+                    <div class="col d-flex justify-content-start ml-2">
+                        <button type="button" class="btn btn-dark oi oi-arrow-thick-right" />
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</Tile>
+        <div class="row d-box justify-content-center">
+            <div class="col">
+                Z/Extruder movement steps:
+            </div>
+            <div class="w-100"></div>
+            <div class="col">
+                <select class="form-control form-control-sm">
+                    <option>0.1</option>
+                    <option>1</option>
+                    <option>10</option>
+                    <option>100</option>
+                </select>
+            </div>
+        </div>
+    </RightSideContent>
+</DoubleSideTile>
