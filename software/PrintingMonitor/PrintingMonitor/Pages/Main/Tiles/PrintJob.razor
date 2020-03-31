@@ -1,3 +1,105 @@
-﻿<Tile Title="Print Job" SizeClasses="col-xl-6 col-md-6 mb-4">
-    <h1>Print Job content</h1>
-</Tile>
+﻿<DoubleSideTile
+    AlignContentCenter
+    Title="Print Job" 
+    SizeClasses="col-xl-6 col-md-6 mb-4"
+    LeftSideSizeClasses="col-xl-5 col-lg-5 col-12"
+    RightSideSizeClasses="col-xl-7 col-lg-7 col-12">
+    <LeftSideContent>
+        <div class="row mb-2">
+            <div class="col">
+                <h6 class="text-center">Printer Status:</h6>
+            </div>
+            <div class="col">
+                <h5 class="text-success">@PrinterStatus</h5>
+            </div>
+            <div class="col-xl-4">
+                <button type="button" class="btn btn-secondary oi oi-x w-100"> Cancel</button>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="progress w-100">
+                <div class="progress-bar bg-secondary progress-bar-striped progress-bar-animated"
+                     role="progressbar"
+                     aria-valuenow="@(PrintingPercent)"
+                     aria-valuemin="0"
+                     aria-valuemax="100"
+                     style="width: @(PrintingPercent)%">
+                    @(PrintingPercent)%
+                </div>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <h6>Print Start Time: @PrintingStarTime</h6>
+        </div>
+        <div class="row mb-2">
+            <h6>Current Command: @CurrentGCodeCommand</h6>
+        </div>
+        <div class="row mb-2">
+            <h6>Commands: @(LinesPrinted) / @(LinesTotalCount)</h6>
+        </div>
+    </LeftSideContent>
+    <RightSideContent>
+        <div class="row mb-2">
+            <h6 class="text-center w-100">List of files:</h6>
+        </div>
+        <div class="row mb-2 ml-1">
+            <select class="custom-select" size="5">
+                @foreach (var file in PrintFiles)
+                {
+                    <option value="file">@(file)</option>
+                }
+            </select>
+        </div>
+        <div class="row mb-2">
+            <div class="col-xl-8">
+                <h6 class="text-center">Select file and start print:</h6>
+            </div>
+            <div class="col-xl-4">
+                <button type="button" class="btn btn-secondary oi oi-check w-100"> Start</button>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <h6 class="text-center w-100">Upload File:</h6>
+        </div>
+        <div class="row mb-2">
+            <div class="col-12 col-xl-6">
+                <div class="custom-file">
+                    <label class="custom-file-label" for="gcode-file-input">Choose file...</label>
+                    <input class="custom-file-input" type="file" id="gcode-file-input">
+                </div>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-secondary oi oi-data-transfer-upload w-100"> Upload File</button>
+            </div>
+            </div>
+    </RightSideContent>
+</DoubleSideTile>
+
+@code
+{
+    private string PrinterStatus { get; } = "Printing";
+
+    private int PrintingPercent { get; } = 50;
+
+    private bool IsPrinting { get; } = true;
+
+    private string CurrentGCodeCommand { get; } = "G0 X133 Y151 Z10";
+
+    private DateTime PrintingStarTime { get; } = DateTime.Now;
+
+    private int LinesTotalCount { get; } = 19730;
+
+    private int LinesPrinted { get; } = 9831;
+
+    private string[] PrintFiles = new[]
+    {
+        "./1.gcode",
+        "./22.gcode", 
+        "./somelongname.gcode", 
+        "./etc.gcode",
+        "./11.gcode",
+        "./222.gcode", 
+        "./2somelongname.gcode", 
+        "./et1c.gcode"
+    };
+}
