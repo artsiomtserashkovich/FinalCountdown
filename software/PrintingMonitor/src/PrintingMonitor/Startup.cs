@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PrintingMonitor.Camera;
 using PrintingMonitor.Data;
 
 namespace PrintingMonitor
@@ -15,8 +16,8 @@ namespace PrintingMonitor
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(environment.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{environment.EnvironmentName}.json", optional: true);
+                .AddJsonFile("appsettings.json", false, true)
+                .AddJsonFile($"appsettings.{environment.EnvironmentName}.json", true);
 
             Configuration = builder.Build();
         }
@@ -42,6 +43,8 @@ namespace PrintingMonitor
 
             services.AddSingleton<IPrinterConnection, StubPrinterConnection>();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<ApplicationUser>>();
+
+            services.AddCameraSupport();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
