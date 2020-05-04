@@ -1,5 +1,6 @@
-﻿@using System.Threading
-@using OpenCvSharp;
+﻿@using PrintingMonitor.Printer.Queries;
+
+@inject ICameraCaptureQuery CameraCaptureQuery
 
 <Tile Title="Camera" SizeClasses="col-xl-4 col-md-6 mb-4 h-75">
     <img src="@_imageSource" class="img-fluid rounded mx-auto d-block" alt="Stream" />
@@ -9,21 +10,15 @@
     private string _imageSource;
 
     protected override void OnAfterRender(bool firstRender)
-    { 
-        using (var capture = new VideoCapture(0))
-        using (var frame = new Mat())
+    {
+        while (true)
         {
-            while (true)
-            {
-                capture.Read(frame);
+            var base64 = CameraCaptureQuery.GetBase64Capture();
+            _imageSource = $"data:image/gif;base64,{base64}";
 
-                var base64 = Convert.ToBase64String(frame.ToBytes());
-                _imageSource = $"data:image/gif;base64,{base64}";
+            Task.Delay(300).Wait();
 
-                Task.Delay(300).Wait();
-
-                StateHasChanged();
-            }
+            StateHasChanged();
         }
     }
 }
