@@ -1,9 +1,8 @@
-﻿@using System.Threading
-@using PrintingMonitor.Printer.Queries;
+﻿@using PrintingMonitor.Printer.Notification
 
 @implements IDisposable
 
-@inject IPositionsQuery PositionsQuery;
+@inject INotificator<PrintingMonitor.Printer.Models.Positions> Notificator;
 
 <DoubleSideTile Title="Positions"
                 AlignContentCenter
@@ -55,26 +54,22 @@
 @code 
 {
     private PrintingMonitor.Printer.Models.Positions positions;
-    private Timer timer;
     
     protected override void OnInitialized()
     {
-        timer = new Timer(
-            new TimerCallback(async _ =>
-            {
-                positions = await PositionsQuery.Get();
-
-                await InvokeAsync(this.StateHasChanged);
-            }),
-            null,
-            1000,
-            5000);
-
+        Notificator.Subscribed(this, PositionsUpdate);
         base.OnInitialized();
+    }
+    
+    private async Task PositionsUpdate(PrintingMonitor.Printer.Models.Positions data)
+    {
+        positions = data;
+
+        await InvokeAsync(this.StateHasChanged);
     }
 
     public void Dispose()
     {
-        timer?.Dispose();
+        Notificator.Unsubscribed(this);
     }
 }

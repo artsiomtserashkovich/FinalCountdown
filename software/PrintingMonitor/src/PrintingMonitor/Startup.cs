@@ -9,6 +9,7 @@ using PrintingMonitor.Camera;
 using PrintingMonitor.Data;
 using PrintingMonitor.Data.Stubs;
 using PrintingMonitor.Identity;
+using PrintingMonitor.Printer;
 
 namespace PrintingMonitor
 {
@@ -28,24 +29,20 @@ namespace PrintingMonitor
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDefaultIdentity<ApplicationUser>()
-                .AddUserStore<OptionsUserStore>();
-
-            services.AddOptions()
-                .Configure<SecurityOptions>(Configuration.GetSection("SecurityOptions"));
-
-            services.AddTransient<IUserPasswordStore<ApplicationUser>, OptionsUserStore>();
-
-            services.AddRazorPages().AddRazorPagesOptions(options =>
-                {
-                    options.Conventions.AuthorizePage("/Account/Login/Login");
-                });
-
+            services
+                .AddRazorPages()
+                .AddRazorPagesOptions(
+                    options =>
+                    {
+                        options.Conventions.AuthorizePage("/Account/Login/Login");
+                    });
             services.AddServerSideBlazor();
 
-            services.RegisterStubs();
-
-            services.AddCameraSupport();
+            services
+                .AddIdentity(Configuration)
+                .RegisterStubs()
+                .AddPrinterCoreSupport()
+                .AddCameraSupport();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

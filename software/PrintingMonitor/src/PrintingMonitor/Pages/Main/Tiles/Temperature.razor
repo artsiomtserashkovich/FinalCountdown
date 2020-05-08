@@ -1,7 +1,8 @@
-﻿@using System.Threading
-@using PrintingMonitor.Printer.Queries;
+﻿@using PrintingMonitor.Printer.Notification
 
-@inject ITemperaturesQuery TemperaturesQuery
+@implements IDisposable
+
+@inject INotificator<Printer.Models.Temperatures> Notificator
 
 <DoubleSideTile Title="Temperature"
                 AlignContentCenter
@@ -71,26 +72,23 @@
 @code 
 {
     private Printer.Models.Temperatures temperatures;
-    private Timer timer;
 
     protected override void OnInitialized()
     {
-        timer = new Timer(
-            new TimerCallback(async _ =>
-            {
-                temperatures = await TemperaturesQuery.Get();
-
-                await InvokeAsync(this.StateHasChanged);
-            }), 
-            null, 
-            1000, 
-            5000);
+        Notificator.Subscribed(this, TemperaturesUpdate);
 
         base.OnInitialized();
+    }
+    
+    private async Task TemperaturesUpdate(PrintingMonitor.Printer.Models.Temperatures data)
+    {
+        temperatures = data;
+
+        await InvokeAsync(this.StateHasChanged);
     }
 
     public void Dispose()
     {
-        timer?.Dispose();
+        Notificator.Unsubscribed(this);
     }
 }

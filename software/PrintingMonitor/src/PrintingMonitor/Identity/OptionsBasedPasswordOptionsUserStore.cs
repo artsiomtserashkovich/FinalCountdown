@@ -6,12 +6,12 @@ using Microsoft.Extensions.Options;
 
 namespace PrintingMonitor.Identity
 {
-    public class OptionsUserStore : IUserPasswordStore<ApplicationUser>
+    public class OptionsBasedPasswordOptionsUserStore : IUserPasswordStore<ApplicationUser>
     {
         private readonly IOptions<SecurityOptions> _options;
         private readonly IPasswordHasher<ApplicationUser> _passwordHasher;
 
-        public OptionsUserStore(IOptions<SecurityOptions> options, IPasswordHasher<ApplicationUser> passwordHasher)
+        public OptionsBasedPasswordOptionsUserStore(IOptions<SecurityOptions> options, IPasswordHasher<ApplicationUser> passwordHasher)
         {
             _options = options;
             _passwordHasher = passwordHasher;
@@ -60,7 +60,7 @@ namespace PrintingMonitor.Identity
             var identityError = new IdentityError
             {
                 Code = "NotSupported",
-                Description = $"This operation not supported by {nameof(OptionsUserStore)}"
+                Description = $"This operation not supported by {nameof(OptionsBasedPasswordOptionsUserStore)}"
             };
 
             return Task.FromResult(IdentityResult.Failed(identityError));
@@ -71,7 +71,7 @@ namespace PrintingMonitor.Identity
             var identityError = new IdentityError
             {
                 Code = "NotSupported",
-                Description = $"This operation not supported by {nameof(OptionsUserStore)}"
+                Description = $"This operation not supported by {nameof(OptionsBasedPasswordOptionsUserStore)}"
             };
 
             return Task.FromResult(IdentityResult.Failed(identityError));
@@ -82,7 +82,7 @@ namespace PrintingMonitor.Identity
             var identityError = new IdentityError
             {
                 Code = "NotSupported",
-                Description = $"This operation not supported by {nameof(OptionsUserStore)}"
+                Description = $"This operation not supported by {nameof(OptionsBasedPasswordOptionsUserStore)}"
             };
 
             return Task.FromResult(IdentityResult.Failed(identityError));
