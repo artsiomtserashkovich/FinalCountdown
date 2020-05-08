@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 
-namespace PrintingMonitor.Data
+namespace PrintingMonitor.Identity
 {
     public class OptionsUserStore : IUserPasswordStore<ApplicationUser>
     {

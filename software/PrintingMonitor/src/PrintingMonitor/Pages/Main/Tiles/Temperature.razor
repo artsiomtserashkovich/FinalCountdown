@@ -1,21 +1,25 @@
-﻿<DoubleSideTile 
-    Title="Temperature"
-    AlignContentCenter
-    SizeClasses="col-xl-5 col-md-6 mb-4"
-    LeftSideSizeClasses="col-xl-4 col-lg-4 col-12"
-    RightSideSizeClasses="col-xl-8 col-lg-8 col-12">
+﻿@using System.Threading
+@using PrintingMonitor.Printer.Queries;
+
+@inject ITemperaturesQuery TemperaturesQuery
+
+<DoubleSideTile Title="Temperature"
+                AlignContentCenter
+                SizeClasses="col-xl-5 col-md-6 mb-4"
+                LeftSideSizeClasses="col-xl-4 col-lg-4 col-12"
+                RightSideSizeClasses="col-xl-8 col-lg-8 col-12">
     <LeftSideContent>
         <div class="row d-flex justify-content-center">
             <h6>Bed Temperature:</h6>
         </div>
         <div class="row d-flex justify-content-center mb-4">
-            <h6>Current: 36.3; Target: 42</h6>
+            <h6>Current: @(temperatures?.BedCurrent?.ToString() ?? "-"); Target: @(temperatures?.BedTarget?.ToString() ?? "-")</h6>
         </div>
         <div class="row d-flex justify-content-center">
             <h6>Hotend Temperature:</h6>
         </div>
         <div class="row d-flex justify-content-center">
-            <h6>Current: 36.3; Target: 42</h6>
+            <h6>Current: @(temperatures?.HotendCurrent?.ToString() ?? "-"); Target: @(temperatures?.HotendTarget?.ToString() ?? "-")</h6>
         </div>
     </LeftSideContent>
     <RightSideContent>
@@ -63,3 +67,30 @@
         </div>
     </RightSideContent>
 </DoubleSideTile>
+
+@code 
+{
+    private Printer.Models.Temperatures temperatures;
+    private Timer timer;
+
+    protected override void OnInitialized()
+    {
+        timer = new Timer(
+            new TimerCallback(async _ =>
+            {
+                temperatures = await TemperaturesQuery.Get();
+
+                await InvokeAsync(this.StateHasChanged);
+            }), 
+            null, 
+            1000, 
+            5000);
+
+        base.OnInitialized();
+    }
+
+    public void Dispose()
+    {
+        timer?.Dispose();
+    }
+}

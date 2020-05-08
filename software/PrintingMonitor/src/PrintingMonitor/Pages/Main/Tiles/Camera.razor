@@ -1,4 +1,7 @@
-﻿@using PrintingMonitor.Printer.Queries;
+﻿@using System.Threading
+@using PrintingMonitor.Printer.Queries;
+
+@implements IDisposable
 
 @inject ICameraCaptureQuery CameraCaptureQuery
 
@@ -6,19 +9,31 @@
     <img src="@_imageSource" class="img-fluid rounded mx-auto d-block" alt="Stream" />
 </Tile>
 
-@code {
+@code 
+{
     private string _imageSource;
+    private Timer timer;
 
-    protected override void OnAfterRender(bool firstRender)
+    protected override void OnInitialized()
     {
-        while (true)
-        {
-            var base64 = CameraCaptureQuery.GetBase64Capture();
-            _imageSource = $"data:image/gif;base64,{base64}";
+        timer = new Timer(
+            new TimerCallback(async _ =>
+            {
+                var base64 = CameraCaptureQuery.GetBase64Capture();
 
-            Task.Delay(300).Wait();
+                _imageSource = $"data:image/gif;base64,{base64}";
 
-            StateHasChanged();
-        }
+                await InvokeAsync(this.StateHasChanged);
+            }),
+            null,
+            1000,
+            5000);
+
+        base.OnInitialized();
+    }
+
+    public void Dispose()
+    {
+        timer?.Dispose();
     }
 }

@@ -7,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PrintingMonitor.Camera;
 using PrintingMonitor.Data;
+using PrintingMonitor.Data.Stubs;
+using PrintingMonitor.Identity;
 
 namespace PrintingMonitor
 {
@@ -41,8 +43,7 @@ namespace PrintingMonitor
 
             services.AddServerSideBlazor();
 
-            services.AddSingleton<IPrinterConnection, StubPrinterConnection>();
-            services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<ApplicationUser>>();
+            services.RegisterStubs();
 
             services.AddCameraSupport();
         }

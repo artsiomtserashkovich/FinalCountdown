@@ -37,12 +37,11 @@ namespace PrintingMonitor.DeveloperSandBox
                 NewLine = "\n"
             };
 
-            port
         }
 
         private string GetCommandWithCheckSumAndNumberLine(string command, int lineNumber)
         {
-
+            return null;
         }
     }
 }

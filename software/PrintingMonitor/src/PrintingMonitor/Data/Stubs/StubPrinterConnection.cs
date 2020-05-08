@@ -11,7 +11,7 @@ namespace PrintingMonitor.Data
         public StubPrinterConnection()
         {
             AvailableBaudRate = new[] { 9600, 19200, 38400, 230400, 115200, 250000,};
-            AvailablePorts = new[] {"COM1", "COM2", "COM3"};
+            AvailablePorts = new[] {"COM2", "COM3"};
         }
     }
 }

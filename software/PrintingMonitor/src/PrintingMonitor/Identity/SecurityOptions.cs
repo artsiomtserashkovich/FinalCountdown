@@ -1,5 +1,5 @@
 ﻿
-namespace PrintingMonitor.Data
+namespace PrintingMonitor.Identity
 {
     public class SecurityOptions
     {

@@ -1,21 +1,27 @@
-﻿<DoubleSideTile 
-    Title="Positions" 
-    AlignContentCenter
-    SizeClasses="col-xl-3 col-md-6 mb-4"
-    LeftSideSizeClasses="col-xl-4 col-lg-4 col-12"
-    RightSideSizeClasses="col-xl-8 col-lg-8 col-12">
+﻿@using System.Threading
+@using PrintingMonitor.Printer.Queries;
+
+@implements IDisposable
+
+@inject IPositionsQuery PositionsQuery;
+
+<DoubleSideTile Title="Positions"
+                AlignContentCenter
+                SizeClasses="col-xl-3 col-md-6 mb-4"
+                LeftSideSizeClasses="col-xl-4 col-lg-4 col-12"
+                RightSideSizeClasses="col-xl-8 col-lg-8 col-12">
     <LeftSideContent>
         <div class="row d-flex justify-content-center mb-4">
-            <h6>Current X: 0.0</h6>
+            <h6>Current X: @(positions?.X.ToString() ?? "-")</h6>
         </div>
         <div class="row d-flex justify-content-center mb-4">
-            <h6>Current Y: 120.0</h6>
+            <h6>Current Y: @(positions?.Y.ToString() ?? "-")</h6>
         </div>
         <div class="row d-flex justify-content-center mb-4">
-            <h6>Current Z: 210.0</h6>
+            <h6>Current Z: @(positions?.Z.ToString() ?? "-")</h6>
         </div>
         <div class="row d-flex justify-content-center">
-            <h6>Current E: 120.0</h6>
+            <h6>Current E: @(positions?.E.ToString() ?? "-")</h6>
         </div>
     </LeftSideContent>
     <RightSideContent>
@@ -45,3 +51,30 @@
         </div>
     </RightSideContent>
 </DoubleSideTile>
+
+@code 
+{
+    private PrintingMonitor.Printer.Models.Positions positions;
+    private Timer timer;
+    
+    protected override void OnInitialized()
+    {
+        timer = new Timer(
+            new TimerCallback(async _ =>
+            {
+                positions = await PositionsQuery.Get();
+
+                await InvokeAsync(this.StateHasChanged);
+            }),
+            null,
+            1000,
+            5000);
+
+        base.OnInitialized();
+    }
+
+    public void Dispose()
+    {
+        timer?.Dispose();
+    }
+}

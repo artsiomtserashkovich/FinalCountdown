@@ -1,6 +1,6 @@
 ﻿using System.Security.Principal;
 
-namespace PrintingMonitor.Data
+namespace PrintingMonitor.Identity
 {
     public class ApplicationUser : IIdentity
     {
