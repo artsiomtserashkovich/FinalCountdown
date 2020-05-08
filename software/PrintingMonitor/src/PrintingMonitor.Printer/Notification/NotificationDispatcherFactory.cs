@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace PrintingMonitor.Printer.Notification
 {
-    class NotificationDispatcherFactory<T> : INotificationDispatcherFactory<T> where T : class
+    internal class NotificationDispatcherFactory<T> : INotificationDispatcherFactory<T> where T : class
     {
         private readonly IServiceProvider _serviceProvider;
 
@@ -12,11 +12,9 @@ namespace PrintingMonitor.Printer.Notification
             _serviceProvider = serviceProvider;
         }
         
-        public INotificationDispatcher<T> Get()
+        public INotificationDispatcher<T> Create()
         {
-            var dispatcher = _serviceProvider.GetService<NotificationDispatcher<T>>();
-
-            if (dispatcher is null)
+            if (!(_serviceProvider.GetService<INotificator<T>>() is INotificationDispatcher<T> dispatcher))
             {
                 throw new InvalidOperationException("INotificationDispatcher<T> isn't registered in DI.'");
             }

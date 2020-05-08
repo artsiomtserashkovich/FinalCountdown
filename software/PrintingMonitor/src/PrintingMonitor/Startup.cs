@@ -10,6 +10,7 @@ using PrintingMonitor.Data;
 using PrintingMonitor.Data.Stubs;
 using PrintingMonitor.Identity;
 using PrintingMonitor.Printer;
+using PrintingMonitor.ScheduledMonitoring;
 
 namespace PrintingMonitor
 {
@@ -42,7 +43,8 @@ namespace PrintingMonitor
                 .AddIdentity(Configuration)
                 .RegisterStubs()
                 .AddPrinterCoreSupport()
-                .AddCameraSupport();
+                .AddCameraSupport()
+                .AddScheduledMonitoringSupport(Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

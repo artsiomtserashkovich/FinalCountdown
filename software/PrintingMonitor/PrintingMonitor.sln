@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrintingMonitor", "src\Prin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrintingMonitor.Printer", "src\PrintingMonitor.Printer\PrintingMonitor.Printer.csproj", "{7049D2A4-4897-4E11-9600-D60B813BEC75}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrintingMonitor.Camera", "src\PrintingMonitor.Camera\PrintingMonitor.Camera.csproj", "{D5C555E6-1A1E-4E3F-86AE-F43DF8A831C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrintingMonitor.Camera", "src\PrintingMonitor.Camera\PrintingMonitor.Camera.csproj", "{D5C555E6-1A1E-4E3F-86AE-F43DF8A831C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrintingMonitor.ScheduledMonitoring", "src\PrintingMonitor.ScheduledMonitoring\PrintingMonitor.ScheduledMonitoring.csproj", "{7BDCF8CB-024C-4AF2-8018-C0FAB423405B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +45,10 @@ Global
 		{D5C555E6-1A1E-4E3F-86AE-F43DF8A831C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5C555E6-1A1E-4E3F-86AE-F43DF8A831C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D5C555E6-1A1E-4E3F-86AE-F43DF8A831C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BDCF8CB-024C-4AF2-8018-C0FAB423405B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BDCF8CB-024C-4AF2-8018-C0FAB423405B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BDCF8CB-024C-4AF2-8018-C0FAB423405B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BDCF8CB-024C-4AF2-8018-C0FAB423405B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +59,7 @@ Global
 		{24D4855E-8938-4F61-B6AD-A7B685544338} = {B1A1A5FC-DCDF-45C4-9A50-E27497FCC309}
 		{7049D2A4-4897-4E11-9600-D60B813BEC75} = {B1A1A5FC-DCDF-45C4-9A50-E27497FCC309}
 		{D5C555E6-1A1E-4E3F-86AE-F43DF8A831C6} = {B1A1A5FC-DCDF-45C4-9A50-E27497FCC309}
+		{7BDCF8CB-024C-4AF2-8018-C0FAB423405B} = {B1A1A5FC-DCDF-45C4-9A50-E27497FCC309}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2AB5570E-72FB-469A-B572-F3A8E8A15F8C}

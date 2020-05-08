@@ -8,10 +8,12 @@ namespace PrintingMonitor.Identity
     {
         public static IServiceCollection AddIdentity(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDefaultIdentity<ApplicationUser>()
+            services
+                .AddDefaultIdentity<ApplicationUser>()
                 .AddUserStore<OptionsBasedPasswordOptionsUserStore>();
 
-            services.AddOptions()
+            services
+                .AddOptions()
                 .Configure<SecurityOptions>(configuration.GetSection("SecurityOptions"));
 
             services.AddTransient<IUserPasswordStore<ApplicationUser>, OptionsBasedPasswordOptionsUserStore>();
