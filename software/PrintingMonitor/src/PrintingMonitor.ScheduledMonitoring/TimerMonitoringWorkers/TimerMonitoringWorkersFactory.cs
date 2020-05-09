@@ -23,7 +23,7 @@ namespace PrintingMonitor.ScheduledMonitoring.TimerMonitoringWorkers
         public IEnumerable<IMonitoringWorker> CreateSingletonWorkers()
         {
             yield return new CameraCapturingMonitoringWorker(
-                TimeSpan.FromSeconds(3),
+                _options.Value.CameraCapturing,
                 GetInterservicesQueue<CameraCaptureCommand>(),
                 GetNotificationDispatcher<CameraCaptureImage>(),
                 GetLogger<CameraCapturingMonitoringWorker>());
