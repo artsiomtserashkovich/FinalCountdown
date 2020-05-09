@@ -10,12 +10,12 @@ namespace PrintingMonitor.DeveloperSandBox
     [TestFixture]
     public class PrinterConnectionSandBox
     {
-        private PrinterConnectionOptions _options;
+        private SerialConnectionOptions _options;
 
         [SetUp]
         public void Setup()
         {
-            _options = new PrinterConnectionOptions
+            _options = new SerialConnectionOptions
             {
                 DtrEnable = true,
                 NewLineSeparator = "/n",
