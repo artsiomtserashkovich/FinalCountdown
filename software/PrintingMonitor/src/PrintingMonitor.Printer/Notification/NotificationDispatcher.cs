@@ -20,12 +20,14 @@ namespace PrintingMonitor.Printer.Notification
             _handlers.Remove(key);
         }
 
-        public async Task ReceiveForNotification(T source)
+        public async Task Notification(T data)
         {
             foreach (var handler in _handlers)
             {
-                await handler.Value(source);
+                await handler.Value(data);
             }
         }
+
+        public bool IsHasSubscribers => _handlers.Count != 0;
     }
 }

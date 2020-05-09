@@ -1,8 +1,9 @@
-﻿@using PrintingMonitor.Printer.Notification
+﻿@using PrintingMonitor.Printer.Models.Information
+@using PrintingMonitor.Printer.Notification
 
 @implements IDisposable
 
-@inject INotificator<Printer.Models.Temperatures> Notificator
+@inject INotificator<Temperatures> Notificator
 
 <DoubleSideTile Title="Temperature"
                 AlignContentCenter
@@ -71,7 +72,7 @@
 
 @code 
 {
-    private Printer.Models.Temperatures temperatures;
+    private Temperatures temperatures;
 
     protected override void OnInitialized()
     {
@@ -80,7 +81,7 @@
         base.OnInitialized();
     }
     
-    private async Task TemperaturesUpdate(PrintingMonitor.Printer.Models.Temperatures data)
+    private async Task TemperaturesUpdate(Temperatures data)
     {
         temperatures = data;
 

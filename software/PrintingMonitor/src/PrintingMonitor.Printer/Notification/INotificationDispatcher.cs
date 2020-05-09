@@ -4,6 +4,8 @@ namespace PrintingMonitor.Printer.Notification
 {
     public interface INotificationDispatcher<in T> where T : class
     {
-        Task ReceiveForNotification(T source);
+        Task Notification(T data);
+
+        bool IsHasSubscribers { get; }
     }
 }

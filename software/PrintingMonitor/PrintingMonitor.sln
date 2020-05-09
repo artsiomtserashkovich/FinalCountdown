@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{F83B7B2B
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrintingMonitor.PrinterConnection", "src\PrintingMonitor.PrinterConnection\PrintingMonitor.PrinterConnection.csproj", "{9CCD3FCA-1603-4E01-AE3E-1418A177B5E7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrintingMonitor.DeveloperSandBox", "tests\PrintingMonitor.DeveloperSandBox\PrintingMonitor.DeveloperSandBox.csproj", "{AB8891D6-6384-4A0A-9B82-8BC0B91E07AF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrintingMonitor.Tests", "tests\PrintingMonitor.Tests\PrintingMonitor.Tests.csproj", "{AB8891D6-6384-4A0A-9B82-8BC0B91E07AF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrintingMonitor", "src\PrintingMonitor\PrintingMonitor.csproj", "{24D4855E-8938-4F61-B6AD-A7B685544338}"
 EndProject
@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrintingMonitor.Printer", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrintingMonitor.Camera", "src\PrintingMonitor.Camera\PrintingMonitor.Camera.csproj", "{D5C555E6-1A1E-4E3F-86AE-F43DF8A831C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrintingMonitor.ScheduledMonitoring", "src\PrintingMonitor.ScheduledMonitoring\PrintingMonitor.ScheduledMonitoring.csproj", "{7BDCF8CB-024C-4AF2-8018-C0FAB423405B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrintingMonitor.ScheduledMonitoring", "src\PrintingMonitor.ScheduledMonitoring\PrintingMonitor.ScheduledMonitoring.csproj", "{7BDCF8CB-024C-4AF2-8018-C0FAB423405B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,4 +1,4 @@
-﻿namespace PrintingMonitor.Printer.Models
+﻿namespace PrintingMonitor.Printer.Models.Information
 {
     public class Temperatures
     {

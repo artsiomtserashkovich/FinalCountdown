@@ -1,11 +1,10 @@
-﻿using System;
-using System.IO.Ports;
+﻿using System.IO.Ports;
 using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using PrintingMonitor.PrinterConnection;
 
-namespace PrintingMonitor.DeveloperSandBox
+namespace PrintingMonitor.Tests
 {
     [TestFixture]
     public class PrinterConnectionSandBox

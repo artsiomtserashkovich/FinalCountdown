@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace PrintingMonitor.Printer.Models
+namespace PrintingMonitor.Printer.Models.Information
 {
-    public class PrinterResponse
+    public class PrinterResponseInformation
     {
         public DateTime CommandSendTime { get; set; }
 

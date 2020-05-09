@@ -2,31 +2,41 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using PrintingMonitor.Printer.Models;
 using PrintingMonitor.Printer.Models.Information;
 using PrintingMonitor.Printer.Notification;
+using PrintingMonitor.Printer.Queries;
 
 namespace PrintingMonitor.ScheduledMonitoring
 {
     internal class ScheduledMonitoringService : IHostedService, IDisposable
     {
+        private readonly ILogger<ScheduledMonitoringService> _logger;
+        private readonly ICameraCaptureQuery _query;
         private readonly IOptions<ScheduledMonitoringOptions> _options;
         private readonly INotificationDispatcher<Temperatures> _temperatureNotificationDispatcher;
         private readonly INotificationDispatcher<Positions> _positionsNotificationDispatcher;
         private readonly INotificationDispatcher<FirmwareInformation> _firmwareNotificationDispatcher;
+        private readonly INotificationDispatcher<CameraCaptureImage> _cameraCaptureNotificationDispatcher;
         private Timer _timer;
 
         public ScheduledMonitoringService(
+            ILogger<ScheduledMonitoringService> logger,
+            ICameraCaptureQuery query,
             IOptions<ScheduledMonitoringOptions> options,
-            INotificationDispatcherFactory<Temperatures> temperatureNotificationDispatcher,
-            INotificationDispatcherFactory<Positions> positionsNotificationDispatcher,
-            INotificationDispatcherFactory<FirmwareInformation> firmwareNotificationDispatcher)
+            INotificationDispatcherFactory<CameraCaptureImage> cameraCaptureNotificationDispatcherFactory,
+            INotificationDispatcherFactory<Temperatures> temperatureNotificationDispatcherFactory,
+            INotificationDispatcherFactory<Positions> positionsNotificationDispatcherFactory,
+            INotificationDispatcherFactory<FirmwareInformation> firmwareNotificationDispatcherFactory)
         {
+            _logger = logger;
+            _query = query;
             _options = options;
-            _temperatureNotificationDispatcher = temperatureNotificationDispatcher.Create();
-            _positionsNotificationDispatcher = positionsNotificationDispatcher.Create();
-            _firmwareNotificationDispatcher = firmwareNotificationDispatcher.Create();
+            _cameraCaptureNotificationDispatcher = cameraCaptureNotificationDispatcherFactory.Create();
+            _temperatureNotificationDispatcher = temperatureNotificationDispatcherFactory.Create();
+            _positionsNotificationDispatcher = positionsNotificationDispatcherFactory.Create();
+            _firmwareNotificationDispatcher = firmwareNotificationDispatcherFactory.Create();
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -92,9 +102,15 @@ namespace PrintingMonitor.ScheduledMonitoring
                 HotendTarget = random.NextDouble(),
             };
 
-            await _firmwareNotificationDispatcher.ReceiveForNotification(information);
-            await _positionsNotificationDispatcher.ReceiveForNotification(positions);
-            await _temperatureNotificationDispatcher.ReceiveForNotification(tempratues);
+            var camera = new CameraCaptureImage
+            {
+                Base64Content = _query.GetBase64Capture()
+            };
+
+            await _cameraCaptureNotificationDispatcher.Notification(camera);
+            await _firmwareNotificationDispatcher.Notification(information);
+            await _positionsNotificationDispatcher.Notification(positions);
+            await _temperatureNotificationDispatcher.Notification(tempratues);
         }
 
         public Task StopAsync(CancellationToken cancellationToken)

@@ -2,7 +2,7 @@
 
 @implements IDisposable
 
-@inject INotificator<PrintingMonitor.Printer.Models.FirmwareInformation> Notificator
+@inject INotificator<Printer.Models.Information.FirmwareInformation> Notificator
 
 <Tile Title="Firmware Information" SizeClasses="col-xl-3 col-md-6  mb-4">
     <div class="row d-flex justify-content-center">
@@ -36,7 +36,7 @@
 
 @code
 {
-    private PrintingMonitor.Printer.Models.FirmwareInformation firmwareInformation;
+    private Printer.Models.Information.FirmwareInformation firmwareInformation;
 
     protected override void OnInitialized()
     {
@@ -45,7 +45,7 @@
         base.OnInitialized();
     }
 
-    private async Task FirmwareInformationUpdate(PrintingMonitor.Printer.Models.FirmwareInformation data)
+    private async Task FirmwareInformationUpdate(Printer.Models.Information.FirmwareInformation data)
     {
         firmwareInformation = data;
 

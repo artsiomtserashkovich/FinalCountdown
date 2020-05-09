@@ -2,5 +2,6 @@
 {
     public class CameraCaptureImage
     {
+        public string Base64Content { get; set; }
     }
 }
