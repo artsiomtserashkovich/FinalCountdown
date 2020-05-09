@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace PrintingMonitor.Printer.Models.Communication
+namespace PrintingMonitor.GCode.Commands
 {
     public abstract class Command
     {
@@ -12,7 +12,7 @@ namespace PrintingMonitor.Printer.Models.Communication
 
         public IReadOnlyCollection<string> Arguments { get; }
 
-        protected Command(CommandType commandType, int commandId, IEnumerable<string> arguments)
+        protected Command(CommandType commandType, int commandId, IEnumerable<string> arguments = null)
         {
             CommandType = commandType;
             CommandId = commandId;

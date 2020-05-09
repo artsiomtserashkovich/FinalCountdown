@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PrintingMonitor.GCode\PrintingMonitor.GCode.csproj" />
     <ProjectReference Include="..\PrintingMonitor.Printer\PrintingMonitor.Printer.csproj" />
   </ItemGroup>
 

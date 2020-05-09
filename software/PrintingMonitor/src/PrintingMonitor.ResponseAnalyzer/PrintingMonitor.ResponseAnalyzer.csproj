@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PrintingMonitor.GCode\PrintingMonitor.GCode.csproj" />
+    <ProjectReference Include="..\PrintingMonitor.Printer\PrintingMonitor.Printer.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,4 +1,4 @@
-﻿namespace PrintingMonitor.Printer.Models.Communication
+﻿namespace PrintingMonitor.GCode.Commands
 {
     public enum CommandType
     {

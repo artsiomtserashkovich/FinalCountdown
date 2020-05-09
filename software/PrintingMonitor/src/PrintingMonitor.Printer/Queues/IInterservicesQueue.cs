@@ -2,7 +2,7 @@
 
 namespace PrintingMonitor.Printer.Queues
 {
-    interface IQueue<T> where T : class
+    public interface IInterservicesQueue<T> where T : class
     {
         Task AddMessage(T message);
 

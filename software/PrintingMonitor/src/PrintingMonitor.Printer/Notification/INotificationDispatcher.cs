@@ -6,6 +6,6 @@ namespace PrintingMonitor.Printer.Notification
     {
         Task Notification(T data);
 
-        bool IsHasSubscribers { get; }
+        bool HasSubscribers { get; }
     }
 }

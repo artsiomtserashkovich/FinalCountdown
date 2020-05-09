@@ -3,11 +3,11 @@ using System.Threading.Tasks;
 
 namespace PrintingMonitor.Printer.Queues
 {
-    public class Queue<T> : IQueue<T> where T : class
+    public class InterservicesQueue<T> : IInterservicesQueue<T> where T : class
     {
         private readonly Channel<T> _channel;
 
-        public Queue()
+        public InterservicesQueue()
         {
             _channel = Channel.CreateUnbounded<T>();
         }

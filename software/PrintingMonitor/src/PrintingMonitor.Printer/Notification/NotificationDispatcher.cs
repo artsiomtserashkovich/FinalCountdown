@@ -28,6 +28,6 @@ namespace PrintingMonitor.Printer.Notification
             }
         }
 
-        public bool IsHasSubscribers => _handlers.Count != 0;
+        public bool HasSubscribers => _handlers.Count != 0;
     }
 }
