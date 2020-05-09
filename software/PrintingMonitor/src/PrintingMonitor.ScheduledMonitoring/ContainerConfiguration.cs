@@ -9,7 +9,7 @@ namespace PrintingMonitor.ScheduledMonitoring
             this IServiceCollection services,
             IConfiguration configuration)
         {
-            services.Configure<ScheduledMonitoringOptions>(configuration.GetSection("ScheduledMonitoring"));
+            services.AddOptions().Configure<ScheduledMonitoringOptions>(configuration.GetSection("ScheduledMonitoring"));
             services.AddHostedService<ScheduledMonitoringService>();
 
             return services;

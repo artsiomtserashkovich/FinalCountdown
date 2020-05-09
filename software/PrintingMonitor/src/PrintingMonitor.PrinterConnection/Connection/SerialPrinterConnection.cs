@@ -19,7 +19,7 @@ namespace PrintingMonitor.PrinterConnection.Connection
             _connectionOptions = connectionOptions;
             _configurator = configurator;
             _port = new SerialPort();
-            _configurator.ConfigureOnInitialize(_port, _connectionOptions.Value);
+            _configurator.ConfigureOnInitialize(_port);
         }
 
         public bool IsConnected => _port.IsOpen;
@@ -39,7 +39,7 @@ namespace PrintingMonitor.PrinterConnection.Connection
         {
             return new ConnectAvailableParameters(
                 SerialPort.GetPortNames().Where(_connectionOptions.Value.AllowedComPorts.Contains),
-                _connectionOptions.Value.AllowedBaudRates);
+                _connectionOptions.Value.AllowedBaudRates.Distinct());
         }
 
         public void Dispose()

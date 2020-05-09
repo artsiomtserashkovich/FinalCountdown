@@ -1,15 +1,12 @@
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PrintingMonitor.Camera;
-using PrintingMonitor.Data;
-using PrintingMonitor.Data.Stubs;
 using PrintingMonitor.Identity;
 using PrintingMonitor.Printer;
+using PrintingMonitor.PrinterConnection;
 using PrintingMonitor.ScheduledMonitoring;
 
 namespace PrintingMonitor
@@ -41,7 +38,7 @@ namespace PrintingMonitor
 
             services
                 .AddIdentity(Configuration)
-                .RegisterStubs()
+                .AddPrinterConnection(Configuration)
                 .AddPrinterCoreSupport()
                 .AddCameraSupport()
                 .AddScheduledMonitoringSupport(Configuration);

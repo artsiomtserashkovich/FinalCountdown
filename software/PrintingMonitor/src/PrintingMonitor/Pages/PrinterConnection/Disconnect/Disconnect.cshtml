@@ -1,6 +1,6 @@
 ﻿@page "/disconnect"
 
-@using PrintingMonitor.Data
+@using PrintingMonitor.Printer.Connection
 
 @attribute [IgnoreAntiforgeryToken]
 @inject IPrinterConnection Connection
@@ -10,7 +10,7 @@
     {
         if (Connection.IsConnected)
         {
-            Connection.IsConnected = false;
+            Connection.Disconnect();
         }
 
         return Redirect("/");

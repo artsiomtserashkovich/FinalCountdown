@@ -2,7 +2,7 @@
 
 @implements IDisposable
 
-@inject INotificator<PrintingMonitor.Printer.Models.Positions> Notificator;
+@inject INotificator<Printer.Models.Information.Positions> Notificator;
 
 <DoubleSideTile Title="Positions"
                 AlignContentCenter
@@ -53,7 +53,7 @@
 
 @code 
 {
-    private PrintingMonitor.Printer.Models.Positions positions;
+    private Printer.Models.Information.Positions positions;
     
     protected override void OnInitialized()
     {
@@ -61,7 +61,7 @@
         base.OnInitialized();
     }
     
-    private async Task PositionsUpdate(PrintingMonitor.Printer.Models.Positions data)
+    private async Task PositionsUpdate(Printer.Models.Information.Positions data)
     {
         positions = data;
 

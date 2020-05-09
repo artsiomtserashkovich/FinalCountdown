@@ -18,7 +18,7 @@ namespace PrintingMonitor.PrinterConnection
             services.AddSingleton<ISerialPortConfigurator, SerialPortConfigurator>();
             services.AddSingleton<SerialPrinterConnection>();
             services.AddSingleton(provider => provider.GetPrinterConnection());
-            services.Configure<SerialConnectionOptions>(configuration.GetSection("SerialConnection"));
+            services.AddOptions().Configure<SerialConnectionOptions>(configuration.GetSection("SerialConnection"));
             
             return services;
         }

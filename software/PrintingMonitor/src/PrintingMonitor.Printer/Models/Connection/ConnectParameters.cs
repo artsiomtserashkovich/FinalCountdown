@@ -4,14 +4,8 @@ namespace PrintingMonitor.Printer.Models.Connection
 {
     public class ConnectParameters
     {
-        public ConnectParameters(string comPort, int baudRate)
-        {
-            ComPort = comPort;
-            BaudRate = baudRate;
-        }
-
         [Required]
-        public string ComPort { get; }
+        public string ComPort { get; set; }
 
         [Required]
         public int BaudRate { get; set; }

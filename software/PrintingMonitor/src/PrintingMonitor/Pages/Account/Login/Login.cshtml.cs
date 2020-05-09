@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using PrintingMonitor.Data;
 using PrintingMonitor.Identity;
 
 namespace PrintingMonitor.Pages.Account.Login

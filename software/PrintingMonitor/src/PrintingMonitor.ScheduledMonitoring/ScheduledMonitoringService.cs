@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using PrintingMonitor.Printer.Models;
+using PrintingMonitor.Printer.Models.Information;
 using PrintingMonitor.Printer.Notification;
 
 namespace PrintingMonitor.ScheduledMonitoring

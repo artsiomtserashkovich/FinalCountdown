@@ -4,18 +4,17 @@
 }
 @model ConnectPage
 @using PrintingMonitor.Pages.PrinterConnection.Connect
-
-
+@using PrintingMonitor.Printer.Models.Connection
 
 <h1 class="h3 mb-4">Please connect to printer</h1>
 <div asp-validation-summary="All" class="alert-danger h5"></div>
 
-<label asp-for="Input.ComPortName" class="sr-only">Com Port:</label>
-<select asp-for="Input.ComPortName" asp-items="@Model.AvailableComPorts" class="form-control form-firstfield">
+<label asp-for="ConnectParameters.ComPort" class="sr-only">Com Port:</label>
+<select asp-for="ConnectParameters.ComPort" asp-items="@Model.AvailableComPorts" class="form-control form-firstfield">
     <option value="">Select Com Port</option>
 </select>
-<label asp-for="Input.BaudRate" class="sr-only">BaudRate:</label>
-<select asp-for="Input.BaudRate" asp-items="@Model.AvailableBaudRates" class="form-control form-secondfield">
+<label asp-for="ConnectParameters.BaudRate" class="sr-only">BaudRate:</label>
+<select asp-for="ConnectParameters.BaudRate" asp-items="@Model.AvailableBaudRates" class="form-control form-secondfield">
     <option value="">Select BaudRate</option>
 </select>
 

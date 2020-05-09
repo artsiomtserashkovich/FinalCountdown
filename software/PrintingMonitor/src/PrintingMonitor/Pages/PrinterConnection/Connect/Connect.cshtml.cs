@@ -4,7 +4,8 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using PrintingMonitor.Data;
+using PrintingMonitor.Printer.Connection;
+using PrintingMonitor.Printer.Models.Connection;
 
 namespace PrintingMonitor.Pages.PrinterConnection.Connect
 {
@@ -18,11 +19,11 @@ namespace PrintingMonitor.Pages.PrinterConnection.Connect
         }
 
         [BindProperty]
-        public ConnectModel Input { get; set; }
+        public ConnectParameters ConnectParameters { get; set; }
 
-        public IEnumerable<SelectListItem> AvailableComPorts { get; private set; }
+        public IReadOnlyCollection<SelectListItem> AvailableComPorts { get; private set; }
 
-        public IEnumerable<SelectListItem> AvailableBaudRates { get; private set; }
+        public IReadOnlyCollection<SelectListItem> AvailableBaudRates { get; private set; }
 
         public IActionResult OnGet()
         {
@@ -38,7 +39,7 @@ namespace PrintingMonitor.Pages.PrinterConnection.Connect
             {
                 try
                 {
-                    _printerConnection.IsConnected = true;
+                    _printerConnection.Connect(ConnectParameters);
                     return LocalRedirect(returnUrl);
                 }
                 catch (Exception exception)
@@ -56,11 +57,13 @@ namespace PrintingMonitor.Pages.PrinterConnection.Connect
 
         private void UpsertPortsInformation()
         {
-            AvailableBaudRates = _printerConnection.AvailableBaudRate
-                    .Select(x => new SelectListItem(x.ToString(), x.ToString()));
+            var availableConnectParameters = _printerConnection.GetConnectAvailableParameters();
 
-            AvailableComPorts = _printerConnection.AvailablePorts
-                    .Select(x => new SelectListItem(x + " Port", x));
+            AvailableBaudRates = availableConnectParameters.BaudRates
+                .Select(x => new SelectListItem(x.ToString(), x.ToString())).ToList();
+
+            AvailableComPorts = availableConnectParameters.ComPorts
+                .Select(x => new SelectListItem(x + " Port", x)).ToList();
         }
     }
 }
