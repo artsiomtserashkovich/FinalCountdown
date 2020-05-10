@@ -11,11 +11,16 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.3" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="3.1.3" />
     <PackageReference Include="Microsoft.Windows.Compatibility" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.3" />
   </ItemGroup>
   
   <ItemGroup>
     <ProjectReference Include="..\PrintingMonitor.GCode\PrintingMonitor.GCode.csproj" />
     <ProjectReference Include="..\PrintingMonitor.Printer\PrintingMonitor.Printer.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="Sender\Models\" />
   </ItemGroup>
 
 </Project>

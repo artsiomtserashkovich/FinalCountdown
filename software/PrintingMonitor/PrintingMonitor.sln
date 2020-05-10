@@ -19,9 +19,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrintingMonitor.Camera", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrintingMonitor.ScheduledMonitoring", "src\PrintingMonitor.ScheduledMonitoring\PrintingMonitor.ScheduledMonitoring.csproj", "{7BDCF8CB-024C-4AF2-8018-C0FAB423405B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrintingMonitor.GCode", "src\PrintingMonitor.GCode\PrintingMonitor.GCode.csproj", "{6579C54F-8256-4DCC-8E21-1D721D7E50AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrintingMonitor.GCode", "src\PrintingMonitor.GCode\PrintingMonitor.GCode.csproj", "{6579C54F-8256-4DCC-8E21-1D721D7E50AE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrintingMonitor.ResponseAnalyzer", "src\PrintingMonitor.ResponseAnalyzer\PrintingMonitor.ResponseAnalyzer.csproj", "{CF8948CA-F4B6-416B-8B1E-8EBB3BA938D0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrintingMonitor.CommandTranslation", "src\PrintingMonitor.CommandTranslation\PrintingMonitor.CommandTranslation.csproj", "{1F6F5BC9-EC69-4509-BEA5-1876A671F449}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,6 +63,10 @@ Global
 		{CF8948CA-F4B6-416B-8B1E-8EBB3BA938D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF8948CA-F4B6-416B-8B1E-8EBB3BA938D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF8948CA-F4B6-416B-8B1E-8EBB3BA938D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F6F5BC9-EC69-4509-BEA5-1876A671F449}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F6F5BC9-EC69-4509-BEA5-1876A671F449}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F6F5BC9-EC69-4509-BEA5-1876A671F449}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F6F5BC9-EC69-4509-BEA5-1876A671F449}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -74,6 +80,7 @@ Global
 		{7BDCF8CB-024C-4AF2-8018-C0FAB423405B} = {B1A1A5FC-DCDF-45C4-9A50-E27497FCC309}
 		{6579C54F-8256-4DCC-8E21-1D721D7E50AE} = {B1A1A5FC-DCDF-45C4-9A50-E27497FCC309}
 		{CF8948CA-F4B6-416B-8B1E-8EBB3BA938D0} = {B1A1A5FC-DCDF-45C4-9A50-E27497FCC309}
+		{1F6F5BC9-EC69-4509-BEA5-1876A671F449} = {B1A1A5FC-DCDF-45C4-9A50-E27497FCC309}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2AB5570E-72FB-469A-B572-F3A8E8A15F8C}

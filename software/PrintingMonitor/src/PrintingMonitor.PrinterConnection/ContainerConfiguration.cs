@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using PrintingMonitor.Printer.Connection;
 using PrintingMonitor.PrinterConnection.Connection;
 using PrintingMonitor.PrinterConnection.Connection.Configurator;
+using PrintingMonitor.PrinterConnection.Sender;
 
 namespace PrintingMonitor.PrinterConnection
 {
@@ -14,12 +15,20 @@ namespace PrintingMonitor.PrinterConnection
             this IServiceCollection services,
             IConfiguration configuration)
         {
+            services.AddPrinterConnectionSupport(configuration);
+
+            services.AddHostedService<PrinterCommandSenderService>();
+
+            return services;
+        }
+
+        private static void AddPrinterConnectionSupport(this IServiceCollection services, IConfiguration configuration)
+        {
             services.AddSingleton<ISerialPortConfigurator, SerialPortConfigurator>();
             services.AddSingleton<SerialPrinterConnection>();
             services.AddSingleton(provider => provider.GetPrinterConnection());
+            services.AddSingleton<ICommunicationConnection>(provider => provider.GetService<SerialPrinterConnection>());
             services.AddOptions().Configure<SerialConnectionOptions>(configuration.GetSection("SerialConnection"));
-            
-            return services;
         }
 
         private static IPrinterConnection GetPrinterConnection(this IServiceProvider provider)

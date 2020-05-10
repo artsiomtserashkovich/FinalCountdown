@@ -38,8 +38,8 @@ namespace PrintingMonitor
 
             services
                 .AddIdentity(Configuration)
-                .AddPrinterConnection(Configuration)
                 .AddPrinterCoreSupport()
+                .AddPrinterConnection(Configuration)
                 .AddCameraSupport()
                 .AddScheduledMonitoringSupport(Configuration);
         }
