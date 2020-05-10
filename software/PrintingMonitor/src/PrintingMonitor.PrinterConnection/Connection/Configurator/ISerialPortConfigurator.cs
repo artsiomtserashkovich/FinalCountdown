@@ -1,7 +1,7 @@
 ﻿using System.IO.Ports;
 using PrintingMonitor.Printer.Models.Connection;
 
-namespace PrintingMonitor.PrinterConnection.Configurator
+namespace PrintingMonitor.PrinterConnection.Connection.Configurator
 {
     internal interface ISerialPortConfigurator
     {

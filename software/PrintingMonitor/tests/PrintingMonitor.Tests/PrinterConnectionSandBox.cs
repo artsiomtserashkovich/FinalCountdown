@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using PrintingMonitor.PrinterConnection;
+using PrintingMonitor.PrinterConnection.Connection;
 
 namespace PrintingMonitor.Tests
 {

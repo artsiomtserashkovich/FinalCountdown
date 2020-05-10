@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace PrintingMonitor.PrinterConnection
+﻿namespace PrintingMonitor.PrinterConnection.Connection
 {
     public class SerialConnectionOptions
     {

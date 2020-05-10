@@ -4,7 +4,7 @@ using System.Linq;
 using Microsoft.Extensions.Options;
 using PrintingMonitor.Printer.Connection;
 using PrintingMonitor.Printer.Models.Connection;
-using PrintingMonitor.PrinterConnection.Configurator;
+using PrintingMonitor.PrinterConnection.Connection.Configurator;
 
 namespace PrintingMonitor.PrinterConnection.Connection
 {

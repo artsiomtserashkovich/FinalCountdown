@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using PrintingMonitor.GCode.Commands;
 using PrintingMonitor.Printer.Models.Commands;
 using PrintingMonitor.Printer.Models.Information;
 using PrintingMonitor.Printer.Notification;
@@ -27,13 +28,26 @@ namespace PrintingMonitor.ScheduledMonitoring.TimerMonitoringWorkers
                 GetInterservicesQueue<CameraCaptureCommand>(),
                 GetNotificationDispatcher<CameraCaptureImage>(),
                 GetLogger<CameraCapturingMonitoringWorker>());
-        }
 
-        public IEnumerable<IMonitoringWorker> CreateScopedWorkers()
-        {
-            throw new NotImplementedException();
-        }
+            yield return new FirmwareInformationMonitoringWorker(
+                _options.Value.FirmwareInformation, 
+                GetInterservicesQueue<Command>(), 
+                GetNotificationDispatcher<FirmwareInformation>(), 
+                GetLogger<FirmwareInformationMonitoringWorker>());
 
+            yield return new PositionMonitoringWorker(
+                _options.Value.Positions,
+                GetInterservicesQueue<Command>(),
+                GetNotificationDispatcher<Positions>(),
+                GetLogger<PositionMonitoringWorker>());
+
+            yield return new TemperaturesMonitoringWorker(
+                _options.Value.Temperatures,
+                GetInterservicesQueue<Command>(),
+                GetNotificationDispatcher<Temperatures>(),
+                GetLogger<TemperaturesMonitoringWorker>());
+        }
+        
         private INotificationDispatcher<T> GetNotificationDispatcher<T>() where T : class
         {
             var dispatcherFactory = _serviceProvider.GetService(typeof(INotificationDispatcherFactory<T>)) as INotificationDispatcherFactory<T>;
@@ -57,8 +71,7 @@ namespace PrintingMonitor.ScheduledMonitoring.TimerMonitoringWorkers
 
             return queue;
         }
-
-
+        
         private ILogger<T> GetLogger<T>() where T : class
         {
             var logger = _serviceProvider.GetService(typeof(ILogger<T>)) as ILogger<T>;

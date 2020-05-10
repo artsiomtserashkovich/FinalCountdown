@@ -6,11 +6,14 @@ namespace PrintingMonitor.ScheduledMonitoring
     {
         public ScheduledMonitoringOptions()
         {
-            Positions = TimeSpan.FromSeconds(1);
-            Temperatures = TimeSpan.FromSeconds(10);
-            PrintingInformation = TimeSpan.FromSeconds(15);
-            CameraCapturing = TimeSpan.FromSeconds(20);
+            Positions = TimeSpan.FromSeconds(20);
+            Temperatures = TimeSpan.FromSeconds(50);
+            PrintingInformation = TimeSpan.FromSeconds(50);
+            CameraCapturing = TimeSpan.FromSeconds(30);
+            FirmwareInformation = TimeSpan.FromSeconds(20);
         }
+
+        public TimeSpan FirmwareInformation { get; set; }
 
         public TimeSpan PrintingInformation { get; set; }
 

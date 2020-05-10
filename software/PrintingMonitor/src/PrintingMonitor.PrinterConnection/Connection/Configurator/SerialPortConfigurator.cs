@@ -4,7 +4,7 @@ using System.Linq;
 using PrintingMonitor.Printer.Connection;
 using PrintingMonitor.Printer.Models.Connection;
 
-namespace PrintingMonitor.PrinterConnection.Configurator
+namespace PrintingMonitor.PrinterConnection.Connection.Configurator
 {
     internal class SerialPortConfigurator : ISerialPortConfigurator
     {

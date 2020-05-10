@@ -3,8 +3,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using PrintingMonitor.Printer.Connection;
-using PrintingMonitor.PrinterConnection.Configurator;
 using PrintingMonitor.PrinterConnection.Connection;
+using PrintingMonitor.PrinterConnection.Connection.Configurator;
 
 namespace PrintingMonitor.PrinterConnection
 {
