@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using PrintingMonitor.GCode.Commands;
 using PrintingMonitor.GCode.Commands.Management;
+using PrintingMonitor.GCode.Commands.Management.Printing;
 using PrintingMonitor.Printer;
 using PrintingMonitor.Printer.Models.Information;
 using PrintingMonitor.Printer.Notification;

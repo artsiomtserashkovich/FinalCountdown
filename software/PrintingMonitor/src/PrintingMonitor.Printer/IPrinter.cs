@@ -11,5 +11,9 @@ namespace PrintingMonitor.Printer
         Task ExecuteManagementCommand(ManagementCommand command);
 
         Task ExecuteInformationCommand(InformationCommand command);
+
+        Task StartPrint(StartPrintCommand command);
+
+        Task StopPrint();
     }
 }

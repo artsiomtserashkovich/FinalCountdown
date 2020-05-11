@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace PrintingMonitor.GCode.Commands.Management
+﻿namespace PrintingMonitor.GCode.Commands.Management.Printing
 {
     public class ReportSDPrintStatus : Command
     {

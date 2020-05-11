@@ -18,9 +18,5 @@
     <ProjectReference Include="..\PrintingMonitor.GCode\PrintingMonitor.GCode.csproj" />
     <ProjectReference Include="..\PrintingMonitor.Printer\PrintingMonitor.Printer.csproj" />
   </ItemGroup>
-  
-  <ItemGroup>
-    <Folder Include="Sender\Models\" />
-  </ItemGroup>
 
 </Project>

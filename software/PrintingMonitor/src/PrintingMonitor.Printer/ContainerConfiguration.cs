@@ -10,6 +10,7 @@ namespace PrintingMonitor.Printer
         {
             services.AddNotificationDispatcher();
             services.AddQueueSupport();
+            services.AddPrinter();
 
             return services;
         }
@@ -23,6 +24,11 @@ namespace PrintingMonitor.Printer
         private static void AddQueueSupport(this IServiceCollection services)
         {
             services.AddSingleton(typeof(IInterservicesQueue<>), typeof(InterservicesQueue<>));
+        }
+
+        private static void AddPrinter(this IServiceCollection services)
+        {
+            services.AddSingleton<IPrinter, Printer>();
         }
     }
 }
