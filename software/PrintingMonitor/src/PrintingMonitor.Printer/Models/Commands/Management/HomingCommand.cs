@@ -12,6 +12,6 @@
 
     public enum HomingDirection
     {
-        X, Y, Z, E, XY, ALL
+        X, Y, Z, XY, ALL
     }
 }

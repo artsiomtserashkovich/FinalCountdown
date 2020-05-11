@@ -17,6 +17,6 @@
 
     public enum MoveDirection
     {
-        Up, Down, Left, Right
+        Up, Down, Left, Right, ExtruderUp, ExtruderDown, ZUp, ZDown
     }
 }

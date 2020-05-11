@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using PrintingMonitor.Printer.Models.Commands;
 using PrintingMonitor.Printer.Models.Commands.Informations;
 using PrintingMonitor.Printer.Models.Commands.Management;
 using PrintingMonitor.Printer.Models.Information;
@@ -8,19 +9,16 @@ using PrintingMonitor.Printer.Queues;
 
 namespace PrintingMonitor.Printer
 {
-    internal class Printer : IPrinter
+    internal class Printer : IPrinter, IDisposable
     {
-        private readonly IInterservicesQueue<ManagementCommand> _managementQueue;
-        private readonly IInterservicesQueue<InformationCommand> _informationQueue;
+        private readonly IInterservicesQueue<UserCommand> _userCommandQueue;
         private readonly INotificator<EndPrintingInformation> _endPrintingNotificator;
 
         public Printer(
-            IInterservicesQueue<ManagementCommand> managementQueue, 
-            IInterservicesQueue<InformationCommand> informationQueue, 
+            IInterservicesQueue<UserCommand> userCommandQueue, 
             INotificator<EndPrintingInformation> endPrintingNotificator)
         {
-            _managementQueue = managementQueue;
-            _informationQueue = informationQueue;
+            _userCommandQueue = userCommandQueue;
             _endPrintingNotificator = endPrintingNotificator;
 
             _endPrintingNotificator.Subscribed(this, EndPrintingHandler);
@@ -35,7 +33,7 @@ namespace PrintingMonitor.Printer
                 throw new InvalidOperationException();
             }
 
-            await _managementQueue.AddMessage(command);
+            await _userCommandQueue.AddMessage(command);
         }
 
         public async Task ExecuteInformationCommand(InformationCommand command)
@@ -45,7 +43,7 @@ namespace PrintingMonitor.Printer
                 throw new InvalidOperationException();
             }
 
-            await _informationQueue.AddMessage(command);
+            await _userCommandQueue.AddMessage(command);
         }
 
         public async Task StartPrint(StartPrintCommand command)
@@ -55,7 +53,7 @@ namespace PrintingMonitor.Printer
                 throw new InvalidOperationException();
             }
 
-            await _managementQueue.AddMessage(command);
+            await _userCommandQueue.AddMessage(command);
         }
 
         public async Task StopPrint()
@@ -65,7 +63,7 @@ namespace PrintingMonitor.Printer
                 throw new InvalidOperationException();
             }
 
-            await _managementQueue.AddMessage(new StopPrintCommand());
+            await _userCommandQueue.AddMessage(new StopPrintCommand());
         }
 
         private Task EndPrintingHandler(EndPrintingInformation information)
@@ -73,6 +71,11 @@ namespace PrintingMonitor.Printer
             IsPrinting = false;
 
             return Task.CompletedTask;
+        }
+
+        public void Dispose()
+        {
+            _endPrintingNotificator.Unsubscribed(this);
         }
     }
 }

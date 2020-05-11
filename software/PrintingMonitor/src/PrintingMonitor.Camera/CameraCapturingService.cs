@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using OpenCvSharp;
-using PrintingMonitor.Printer.Models.Commands;
 using PrintingMonitor.Printer.Models.Commands.Informations;
 using PrintingMonitor.Printer.Models.Information;
 using PrintingMonitor.Printer.Notification;

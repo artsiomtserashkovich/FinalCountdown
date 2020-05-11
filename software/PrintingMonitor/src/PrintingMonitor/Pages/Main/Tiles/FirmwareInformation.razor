@@ -1,7 +1,10 @@
-﻿@using PrintingMonitor.Printer.Notification
+﻿@using PrintingMonitor.Printer
+@using PrintingMonitor.Printer.Models.Commands.Informations
+@using PrintingMonitor.Printer.Notification
 
 @implements IDisposable
 
+@inject IPrinter Printer
 @inject INotificator<Printer.Models.Information.FirmwareInformation> Notificator
 
 <Tile Title="Firmware Information" SizeClasses="col-xl-3 col-md-6  mb-4">
@@ -38,9 +41,11 @@
 {
     private Printer.Models.Information.FirmwareInformation firmwareInformation;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         Notificator.Subscribed(this, FirmwareInformationUpdate);
+
+        await Printer.ExecuteInformationCommand(new GetCurrentFirmwareInformation());
 
         base.OnInitialized();
     }

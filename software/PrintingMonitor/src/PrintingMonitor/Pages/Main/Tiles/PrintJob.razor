@@ -1,9 +1,19 @@
-﻿<DoubleSideTile
-    AlignContentCenter
-    Title="Print Job" 
-    SizeClasses="col-xl-6 col-md-6 mb-4"
-    LeftSideSizeClasses="col-xl-5 col-lg-5 col-12"
-    RightSideSizeClasses="col-xl-7 col-lg-7 col-12">
+﻿@using PrintingMonitor.Printer
+@using PrintingMonitor.Printer.Models.Commands.Informations
+@using PrintingMonitor.Printer.Notification
+
+@implements IDisposable
+
+@inject IPrinter Printer
+
+@inject INotificator<Printer.Models.Information.PrintingFileInformation> PrintingFileNotificator
+@inject INotificator<Printer.Models.Information.PrintingInformation> PrintingNotificator
+
+<DoubleSideTile AlignContentCenter
+                Title="Print Job"
+                SizeClasses="col-xl-6 col-md-6 mb-4"
+                LeftSideSizeClasses="col-xl-5 col-lg-5 col-12"
+                RightSideSizeClasses="col-xl-7 col-lg-7 col-12">
     <LeftSideContent>
         <div class="row mb-2">
             <div class="col">
@@ -27,9 +37,6 @@
                     @(PrintingPercent)%
                 </div>
             </div>
-        </div>
-        <div class="row mb-2">
-            <h6>Print Start Time: @PrintingStarTime</h6>
         </div>
         <div class="row mb-2">
             <h6>Current Command: @CurrentGCodeCommand</h6>
@@ -58,20 +65,6 @@
                 <button type="button" class="btn btn-secondary oi oi-check w-100"> Start</button>
             </div>
         </div>
-        <div class="row mb-2">
-            <h6 class="text-center w-100">Upload File:</h6>
-        </div>
-        <div class="row mb-2">
-            <div class="col-12 col-xl-6">
-                <div class="custom-file">
-                    <label class="custom-file-label" for="gcode-file-input">Choose file...</label>
-                    <input class="custom-file-input" type="file" id="gcode-file-input">
-                </div>
-            </div>
-            <div class="col">
-                <button type="button" class="btn btn-secondary oi oi-data-transfer-upload w-100"> Upload File</button>
-            </div>
-            </div>
     </RightSideContent>
 </DoubleSideTile>
 
@@ -94,12 +87,39 @@
     private string[] PrintFiles = new[]
     {
         "./1.gcode",
-        "./22.gcode", 
-        "./somelongname.gcode", 
+        "./22.gcode",
+        "./somelongname.gcode",
         "./etc.gcode",
         "./11.gcode",
-        "./222.gcode", 
-        "./2somelongname.gcode", 
+        "./222.gcode",
+        "./2somelongname.gcode",
         "./et1c.gcode"
     };
+    
+    protected override async Task OnInitializedAsync()
+    {
+        PrintingNotificator.Subscribed(this, PrintingUpdate);
+        PrintingFileNotificator.Subscribed(this, PrintingFileUpdate);
+        
+        await Printer.ExecuteInformationCommand(new GetPrintingFiles());
+
+        base.OnInitialized();
+    }
+
+    private async Task PrintingUpdate(Printer.Models.Information.PrintingInformation data)
+    {
+        await InvokeAsync(this.StateHasChanged);
+    }
+
+    private async Task PrintingFileUpdate(Printer.Models.Information.PrintingFileInformation data)
+    {
+        await InvokeAsync(this.StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        PrintingNotificator.Unsubscribed(this);
+        PrintingFileNotificator.Unsubscribed(this);
+    }
+
 }

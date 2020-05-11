@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PrintingMonitor.Camera\PrintingMonitor.Camera.csproj" />
+    <ProjectReference Include="..\PrintingMonitor.CommandTranslation\PrintingMonitor.CommandTranslation.csproj" />
     <ProjectReference Include="..\PrintingMonitor.PrinterConnection\PrintingMonitor.PrinterConnection.csproj" />
     <ProjectReference Include="..\PrintingMonitor.Printer\PrintingMonitor.Printer.csproj" />
     <ProjectReference Include="..\PrintingMonitor.ScheduledMonitoring\PrintingMonitor.ScheduledMonitoring.csproj" />

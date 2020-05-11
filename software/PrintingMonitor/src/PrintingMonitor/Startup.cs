@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PrintingMonitor.Camera;
+using PrintingMonitor.CommandTranslation;
 using PrintingMonitor.Identity;
 using PrintingMonitor.Printer;
 using PrintingMonitor.PrinterConnection;
@@ -41,7 +42,8 @@ namespace PrintingMonitor
                 .AddPrinterCoreSupport()
                 .AddPrinterConnection(Configuration)
                 .AddCameraSupport()
-                .AddScheduledMonitoringSupport(Configuration);
+                .AddScheduledMonitoringSupport(Configuration)
+                .AddUserCommandTranslation();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
