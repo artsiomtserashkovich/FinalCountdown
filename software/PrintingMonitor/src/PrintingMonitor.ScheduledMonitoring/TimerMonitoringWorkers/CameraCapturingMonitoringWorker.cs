@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using PrintingMonitor.Printer.Models.Commands;
+using PrintingMonitor.Printer.Models.Commands.Informations;
 using PrintingMonitor.Printer.Models.Information;
 using PrintingMonitor.Printer.Notification;
 using PrintingMonitor.Printer.Queues;
@@ -14,12 +14,12 @@ namespace PrintingMonitor.ScheduledMonitoring.TimerMonitoringWorkers
         private readonly INotificationDispatcher<CameraCaptureImage> _cameraCaptureNotificationDispatcher;
         private readonly ILogger<CameraCapturingMonitoringWorker> _logger;
         private readonly TimeSpan _interval;
-        private readonly IInterservicesQueue<CameraCaptureCommand> _queue;
+        private readonly IInterservicesQueue<GetCameraCapture> _queue;
         private Timer _timer;
 
         public CameraCapturingMonitoringWorker(
             TimeSpan interval, 
-            IInterservicesQueue<CameraCaptureCommand> queue, 
+            IInterservicesQueue<GetCameraCapture> queue, 
             INotificationDispatcher<CameraCaptureImage> cameraCaptureNotificationDispatcher,
             ILogger<CameraCapturingMonitoringWorker> logger)
         {
@@ -58,9 +58,9 @@ namespace PrintingMonitor.ScheduledMonitoring.TimerMonitoringWorkers
         {
             if (_cameraCaptureNotificationDispatcher.HasSubscribers)
             {
-                await _queue.AddMessage(new CameraCaptureCommand());
+                await _queue.AddMessage(new GetCameraCapture());
 
-                _logger.LogInformation($"{nameof(CameraCaptureCommand)} was created.");
+                _logger.LogInformation($"{nameof(GetCameraCapture)} was created.");
             }
         }
     }

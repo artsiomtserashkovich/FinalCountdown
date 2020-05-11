@@ -7,6 +7,8 @@ namespace PrintingMonitor.PrinterConnection.Connection
     {
         void SendCommand(string command);
 
-        void SubscribedToResponse(Func<string, Task> handler, object key);
+        string ReadUntil(string key);
+
+        bool HasResponseToRead { get; }
     }
 }

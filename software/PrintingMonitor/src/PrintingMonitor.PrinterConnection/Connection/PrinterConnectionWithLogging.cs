@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using PrintingMonitor.Printer.Connection;
 using PrintingMonitor.Printer.Models.Connection;
@@ -18,11 +19,11 @@ namespace PrintingMonitor.PrinterConnection.Connection
 
         public bool IsConnected => _origin.IsConnected;
 
-        public void Connect(ConnectParameters parameters)
+        public async Task Connect(ConnectParameters parameters)
         {
             try
             {
-                _origin.Connect(parameters);
+                await _origin.Connect(parameters);
 
                 _logger.LogInformation($"{nameof(_origin.Connect)} was executed with parameters: ComPort:{parameters.ComPort}; BaudRate:{parameters.BaudRate}.");
             }

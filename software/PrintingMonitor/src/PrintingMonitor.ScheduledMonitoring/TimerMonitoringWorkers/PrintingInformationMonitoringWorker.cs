@@ -4,29 +4,33 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using PrintingMonitor.GCode.Commands;
 using PrintingMonitor.GCode.Commands.Management;
+using PrintingMonitor.Printer;
 using PrintingMonitor.Printer.Models.Information;
 using PrintingMonitor.Printer.Notification;
 using PrintingMonitor.Printer.Queues;
 
 namespace PrintingMonitor.ScheduledMonitoring.TimerMonitoringWorkers
 {
-    internal class FirmwareInformationMonitoringWorker : IMonitoringWorker
+    internal class PrintingInformationMonitoringWorker : IMonitoringWorker
     {
-        private readonly INotificationDispatcher<FirmwareInformation> _firmwareInformationNotificationDispatcher;
-        private readonly ILogger<FirmwareInformationMonitoringWorker> _logger;
+        private readonly INotificationDispatcher<PrintingInformation> _printingInformationNotificationDispatcher;
+        private readonly ILogger<PrintingInformationMonitoringWorker> _logger;
         private readonly TimeSpan _interval;
+        private readonly IPrinter _printer;
         private readonly IInterservicesQueue<Command> _queue;
         private Timer _timer;
 
-        public FirmwareInformationMonitoringWorker(
+        public PrintingInformationMonitoringWorker(
             TimeSpan interval,
+            IPrinter printer,
             IInterservicesQueue<Command> queue,
-            INotificationDispatcher<FirmwareInformation> firmwareInformationNotificationDispatcher,
-            ILogger<FirmwareInformationMonitoringWorker> logger)
+            INotificationDispatcher<PrintingInformation> printingInformationNotificationDispatcher,
+            ILogger<PrintingInformationMonitoringWorker> logger)
         {
             _interval = interval;
+            _printer = printer;
             _queue = queue;
-            _firmwareInformationNotificationDispatcher = firmwareInformationNotificationDispatcher;
+            _printingInformationNotificationDispatcher = printingInformationNotificationDispatcher;
             _logger = logger;
         }
 
@@ -57,11 +61,11 @@ namespace PrintingMonitor.ScheduledMonitoring.TimerMonitoringWorkers
 
         private async Task BackgroundProcessing()
         {
-            if (_firmwareInformationNotificationDispatcher.HasSubscribers)
+            if (_printingInformationNotificationDispatcher.HasSubscribers && _printer.IsPrinting)
             {
-                await _queue.AddMessage(new ReadParamsFromEEPROM());
+                await _queue.AddMessage(new ReportSDPrintStatus());
 
-                _logger.LogInformation($"{nameof(ReadParamsFromEEPROM)} was created.");
+                _logger.LogInformation($"{nameof(ReportSDPrintStatus)} was created.");
             }
         }
     }

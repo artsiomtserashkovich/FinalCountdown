@@ -10,7 +10,7 @@ namespace PrintingMonitor.GCode.Commands
 
         public int CommandId { get; }
 
-        public IReadOnlyCollection<string> Arguments { get; }
+        public IReadOnlyCollection<string> Arguments { get; protected set; }
 
         protected Command(CommandType commandType, int commandId, IEnumerable<string> arguments = null)
         {

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.IO.Ports;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,25 +12,31 @@ namespace PrintingMonitor.PrinterConnection.Connection
     internal class SerialPrinterConnection : IPrinterConnection, ICommunicationConnection, IDisposable
     {
         private readonly SerialPort _port;
+        private readonly IOnConnectionAction _onConnectionAction;
         private readonly IOptions<SerialConnectionOptions> _connectionOptions;
         private readonly ISerialPortConfigurator _configurator;
-        private readonly ConcurrentDictionary<object, Func<string, Task>> _consumers = new ConcurrentDictionary<object, Func<string, Task>>();
 
-        public SerialPrinterConnection(IOptions<SerialConnectionOptions> connectionOptions, ISerialPortConfigurator configurator)
+        public SerialPrinterConnection(
+            IOnConnectionAction onConnectionAction, 
+            IOptions<SerialConnectionOptions> connectionOptions, 
+            ISerialPortConfigurator configurator)
         {
+            _onConnectionAction = onConnectionAction;
             _connectionOptions = connectionOptions;
             _configurator = configurator;
+
             _port = new SerialPort();
             _configurator.ConfigureOnInitialize(_port);
-            _port.DataReceived += HandleDataReceived;
         }
 
         public bool IsConnected => _port.IsOpen;
 
-        public void Connect(ConnectParameters parameters)
+        public async Task Connect(ConnectParameters parameters)
         {
             _configurator.ConfigureOnConnect(_port, parameters, _connectionOptions.Value);
             _port.Open();
+            
+            await _onConnectionAction.Execute();
         }
 
         public void Disconnect()
@@ -61,25 +66,16 @@ namespace PrintingMonitor.PrinterConnection.Connection
             _port.WriteLine(command);
         }
 
-        public void SubscribedToResponse(Func<string, Task> handler, object key)
+        public string ReadUntil(string key)
         {
-            _consumers.TryAdd(key, handler);
-        }
-
-        private void HandleDataReceived(object sender, SerialDataReceivedEventArgs e)
-        {
-            var port = sender as SerialPort;
-
-            while (port.BytesToRead != 0)
+            if (!IsConnected)
             {
-                var response = port.ReadTo("ok");
-
-                foreach (var consumer in _consumers)
-                {
-                    consumer.Value(response).Wait();
-                }
+                throw new InvalidOperationException("Serial Connection isn't open.");
             }
 
+            return _port.ReadTo(key);
         }
+
+        public bool HasResponseToRead => _port.BytesToRead != 0;
     }
 }

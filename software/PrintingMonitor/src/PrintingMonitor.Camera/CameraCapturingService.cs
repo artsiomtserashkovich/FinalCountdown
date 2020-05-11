@@ -5,6 +5,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using OpenCvSharp;
 using PrintingMonitor.Printer.Models.Commands;
+using PrintingMonitor.Printer.Models.Commands.Informations;
 using PrintingMonitor.Printer.Models.Information;
 using PrintingMonitor.Printer.Notification;
 using PrintingMonitor.Printer.Queues;
@@ -14,12 +15,12 @@ namespace PrintingMonitor.Camera
     internal class CameraCapturingService : BackgroundService
     {
         private readonly ILogger<CameraCapturingService> _logger;
-        private readonly IInterservicesQueue<CameraCaptureCommand> _queue;
+        private readonly IInterservicesQueue<GetCameraCapture> _queue;
         private readonly INotificationDispatcher<CameraCaptureImage> _cameraCaptureNotificationDispatcher;
 
         public CameraCapturingService(
             ILogger<CameraCapturingService> logger,
-            IInterservicesQueue<CameraCaptureCommand> queue,
+            IInterservicesQueue<GetCameraCapture> queue,
             INotificationDispatcherFactory<CameraCaptureImage> cameraCaptureNotificationDispatcherFactory)
         {
             _logger = logger;
@@ -49,7 +50,7 @@ namespace PrintingMonitor.Camera
 
                 try
                 {
-                    _logger.LogInformation($"{nameof(CameraCaptureCommand)} was received.");
+                    _logger.LogInformation($"{nameof(GetCameraCapture)} was received.");
 
                     var cameraCapture = GetBase64Capture();
 

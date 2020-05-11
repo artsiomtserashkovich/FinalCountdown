@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -31,7 +32,7 @@ namespace PrintingMonitor.Pages.PrinterConnection.Connect
             return Page();
         }
 
-        public IActionResult OnPost(string returnUrl = null)
+        public async Task<IActionResult> OnPost(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("/");
 
@@ -39,7 +40,7 @@ namespace PrintingMonitor.Pages.PrinterConnection.Connect
             {
                 try
                 {
-                    _printerConnection.Connect(ConnectParameters);
+                    await _printerConnection.Connect(ConnectParameters);
                     return LocalRedirect(returnUrl);
                 }
                 catch (Exception exception)

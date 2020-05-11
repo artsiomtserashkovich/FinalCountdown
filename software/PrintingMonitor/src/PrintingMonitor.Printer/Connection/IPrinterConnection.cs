@@ -1,4 +1,5 @@
-﻿using PrintingMonitor.Printer.Models.Connection;
+﻿using System.Threading.Tasks;
+using PrintingMonitor.Printer.Models.Connection;
 
 namespace PrintingMonitor.Printer.Connection
 {
@@ -6,7 +7,7 @@ namespace PrintingMonitor.Printer.Connection
     {
         bool IsConnected { get; }
 
-        void Connect(ConnectParameters parameters);
+        Task Connect(ConnectParameters parameters);
 
         void Disconnect();
 

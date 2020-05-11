@@ -35,13 +35,6 @@ namespace PrintingMonitor.PrinterConnection.Sender
         {
             _logger.LogInformation("Service is starting.");
 
-            _connection.SubscribedToResponse(response =>
-            {
-                _logger.LogInformation("Printer response:" + response);
-                
-                return Task.CompletedTask;
-            }, this);
-
             await BackgroundProcessing(stoppingToken);
         }
 

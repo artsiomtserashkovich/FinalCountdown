@@ -10,10 +10,7 @@ namespace PrintingMonitor.ScheduledMonitoring
             Temperatures = TimeSpan.FromSeconds(50);
             PrintingInformation = TimeSpan.FromSeconds(50);
             CameraCapturing = TimeSpan.FromSeconds(30);
-            FirmwareInformation = TimeSpan.FromSeconds(20);
         }
-
-        public TimeSpan FirmwareInformation { get; set; }
 
         public TimeSpan PrintingInformation { get; set; }
 
