@@ -8,6 +8,7 @@ using PrintingMonitor.CommandTranslation;
 using PrintingMonitor.Identity;
 using PrintingMonitor.Printer;
 using PrintingMonitor.PrinterConnection;
+using PrintingMonitor.ResponseAnalyzer;
 using PrintingMonitor.ScheduledMonitoring;
 
 namespace PrintingMonitor
@@ -43,7 +44,8 @@ namespace PrintingMonitor
                 .AddPrinterConnection(Configuration)
                 .AddCameraSupport()
                 .AddScheduledMonitoringSupport(Configuration)
-                .AddUserCommandTranslation();
+                .AddUserCommandTranslation()
+                .AddResponseAnalyzers();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

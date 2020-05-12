@@ -1,4 +1,6 @@
-﻿namespace PrintingMonitor.PrinterConnection.Connection
+﻿using System;
+
+namespace PrintingMonitor.PrinterConnection.Connection
 {
     public class SerialConnectionOptions
     {
@@ -9,6 +11,9 @@
             NewLineSeparator = "/n";
             OneStopBits = true;
             DtrEnable = true;
+            RetryOnTimeout = 10;
+            RetryOnError = 2;
+            ReadTimeout = TimeSpan.FromSeconds(10);
         }
 
         public string[] AllowedComPorts { get; set; }
@@ -20,5 +25,11 @@
         public bool OneStopBits { get; set; }
 
         public bool DtrEnable { get; set; }
+
+        public int RetryOnTimeout { get; set; }
+
+        public int RetryOnError { get; set; }
+
+        public TimeSpan ReadTimeout { get; set; }
     }
 }

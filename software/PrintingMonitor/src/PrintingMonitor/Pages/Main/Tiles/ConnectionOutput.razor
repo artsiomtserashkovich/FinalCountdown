@@ -1,14 +1,44 @@
-﻿<Tile Title="Connection output" SizeClasses="col-xl-3 col-md-6 mb-4">
-    <div class="row">
-        <h6>[@(DateTime.Now)]: ok T:0.00 /0.00 B:24.50 /0.00</h6>
-    </div>
-    <div class="row">
-        <h6>[@(DateTime.Now)]: G0 X12 Y123 Z124</h6>
-    </div>
-    <div class="row">
-        <h6>[@(DateTime.Now)]: M92 X645.00 Y645.00 </h6>
-    </div>
-    <div class="row">
-        <h6>[@(DateTime.Now)]: G0 X12 Y123 Z124</h6>
-    </div>
+﻿@using PrintingMonitor.Printer.Models.Information
+@using PrintingMonitor.Printer.Notification
+
+@implements IDisposable
+
+@inject INotificator<ConnectionOutputInformation> Notificator;
+
+    <Tile Title="Connection output" SizeClasses="col-xl-3 col-md-6 mb-4">
+        <ul class="list-group" style="overflow:scroll;max-height: 250px;">
+            @foreach (var output in outputs)
+            {
+                <li class="list-group-item">
+                    <h6>[@(output.CommandSendTime)]: @(output.Command ?? "")</h6>
+                    <h6>[@(output.ResponseReceiveTime)]: @(output.Response ?? "")</h6>
+                </li>
+            }
+</ul>
 </Tile>
+
+@code
+{
+    private ICollection<ConnectionOutputInformation> outputs = new List<ConnectionOutputInformation>();
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            Notificator.Subscribed(this, OutputUpdate);
+        }
+        base.OnAfterRender(firstRender);
+    }
+    
+    private async Task OutputUpdate(ConnectionOutputInformation data)
+    {
+        outputs.Add(data);
+
+        await InvokeAsync(this.StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        Notificator.Unsubscribed(this);
+    }
+}

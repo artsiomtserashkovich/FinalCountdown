@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using PrintingMonitor.GCode.Commands.Management;
 using PrintingMonitor.Printer.Connection;
 using PrintingMonitor.PrinterConnection.Connection;
 using PrintingMonitor.PrinterConnection.Connection.Actions;
@@ -19,6 +18,7 @@ namespace PrintingMonitor.PrinterConnection
         {
             services.AddPrinterConnectionSupport(configuration);
             services.AddConnectionActions();
+            services.AddSingleton<IPrinterCommandSender, SingleCommandSenderWithRetry>();
             services.AddHostedService<PrinterCommandSenderService>();
 
             return services;

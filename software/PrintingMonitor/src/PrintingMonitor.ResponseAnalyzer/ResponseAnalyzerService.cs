@@ -3,28 +3,25 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using PrintingMonitor.GCode;
-using PrintingMonitor.GCode.Commands;
 using PrintingMonitor.Printer.Queues;
+using PrintingMonitor.ResponseAnalyzer.Analyzers;
 
-namespace PrintingMonitor.PrinterConnection.Sender
+namespace PrintingMonitor.ResponseAnalyzer
 {
-    internal class PrinterCommandSenderService : BackgroundService
+    internal class ResponseAnalyzerService : BackgroundService
     {
-        private readonly IPrinterCommandSender _commandSender;
-        private readonly ILogger<PrinterCommandSenderService> _logger;
+        private readonly IResponseAnalyzer _responseAnalyzer;
+        private readonly ILogger<ResponseAnalyzerService> _logger;
         private readonly IInterservicesQueue<PrinterResponse> _responseQueue;
-        private readonly IInterservicesQueue<Command> _commandQueue;
 
-        public PrinterCommandSenderService(
-            IPrinterCommandSender commandSender,
-            ILogger<PrinterCommandSenderService> logger,
-            IInterservicesQueue<PrinterResponse> responseQueue,
-            IInterservicesQueue<Command> commandQueue)
+        public ResponseAnalyzerService(
+            IResponseAnalyzersFactory responseAnalyzersFactory,
+            ILogger<ResponseAnalyzerService> logger,
+            IInterservicesQueue<PrinterResponse> responseQueue)
         {
-            _commandSender = commandSender;
+            _responseAnalyzer = responseAnalyzersFactory.CreateResponseAnalyzer();
             _logger = logger;
             _responseQueue = responseQueue;
-            _commandQueue = commandQueue;
         }
 
         public override Task StopAsync(CancellationToken cancellationToken)
@@ -45,13 +42,10 @@ namespace PrintingMonitor.PrinterConnection.Sender
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                var command = await _commandQueue.GetMessage();
-                _logger.LogInformation($"{command} was received.");
-
-                var response = _commandSender.SendCommand(command);
+                var response = await _responseQueue.GetMessage();
                 _logger.LogInformation($"{response} was received.");
 
-                await _responseQueue.AddMessage(response);
+                await _responseAnalyzer.Analyze(response);
             }
         }
     }

@@ -10,6 +10,7 @@ namespace PrintingMonitor.GCode
         public Command Command { get; }
 
         public DateTime ReceiveTime { get; }
+
         public string Response { get; }
 
         public PrinterResponse(DateTime sendTime, Command command, DateTime receiveTime, string response)
@@ -18,6 +19,11 @@ namespace PrintingMonitor.GCode
             Command = command;
             ReceiveTime = receiveTime;
             Response = response;
+        }
+
+        public override string ToString()
+        {
+            return $"{SendTime}:{Command}; {ReceiveTime}:{Response}.";
         }
     }
 }

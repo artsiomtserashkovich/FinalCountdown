@@ -8,12 +8,13 @@ namespace PrintingMonitor.PrinterConnection.Connection.Configurator
 {
     internal class SerialPortConfigurator : ISerialPortConfigurator
     {
-        public void ConfigureOnInitialize(SerialPort serialPort)
+        public void ConfigureOnInitialize(SerialPort serialPort, SerialConnectionOptions options)
         {
             AssertSerialPort(serialPort);
 
             serialPort.Parity = Parity.None;
             serialPort.DataBits = 8;
+            serialPort.ReadTimeout = (int)options.ReadTimeout.TotalMilliseconds;
         }
 
         public void ConfigureOnConnect(SerialPort serialPort, ConnectParameters connectParameters, SerialConnectionOptions options)

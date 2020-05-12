@@ -26,7 +26,7 @@ namespace PrintingMonitor.PrinterConnection.Connection
             _configurator = configurator;
 
             _port = new SerialPort();
-            _configurator.ConfigureOnInitialize(_port);
+            _configurator.ConfigureOnInitialize(_port, _connectionOptions.Value);
         }
 
         public bool IsConnected => _port.IsOpen;
