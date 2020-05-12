@@ -76,6 +76,16 @@ namespace PrintingMonitor.PrinterConnection.Connection
             return _port.ReadTo(key);
         }
 
+        public string ReadLine()
+        {
+            if (!IsConnected)
+            {
+                throw new InvalidOperationException("Serial Connection isn't open.");
+            }
+
+            return _port.ReadLine();
+        }
+
         public bool HasResponseToRead => _port.BytesToRead != 0;
     }
 }

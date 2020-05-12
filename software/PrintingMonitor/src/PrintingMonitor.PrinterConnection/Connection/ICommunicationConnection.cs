@@ -9,6 +9,8 @@ namespace PrintingMonitor.PrinterConnection.Connection
 
         string ReadUntil(string key);
 
+        string ReadLine();
+
         bool HasResponseToRead { get; }
     }
 }

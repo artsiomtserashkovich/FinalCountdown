@@ -1,5 +1,6 @@
 ﻿@using PrintingMonitor.Printer
 @using PrintingMonitor.Printer.Models.Commands.Informations
+@using PrintingMonitor.Printer.Models.Information
 @using PrintingMonitor.Printer.Notification
 
 @implements IDisposable
@@ -20,30 +21,36 @@
                 <h6 class="text-center">Printer Status:</h6>
             </div>
             <div class="col">
-                <h5 class="text-success">@PrinterStatus</h5>
+                <h5 class="text-success">@(Printer.IsPrinting ? "Printing" : "Ready")</h5>
             </div>
-            <div class="col-xl-4">
-                <button type="button" class="btn btn-secondary oi oi-x w-100"> Cancel</button>
-            </div>
+            @if (Printer.IsPrinting)
+            {
+                <div class="col-xl-4">
+                    <button type="button" class="btn btn-secondary oi oi-x w-100"> Cancel</button>
+                </div>
+            }
         </div>
-        <div class="row mb-2">
-            <div class="progress w-100">
-                <div class="progress-bar bg-secondary progress-bar-striped progress-bar-animated"
-                     role="progressbar"
-                     aria-valuenow="@(PrintingPercent)"
-                     aria-valuemin="0"
-                     aria-valuemax="100"
-                     style="width: @(PrintingPercent)%">
-                    @(PrintingPercent)%
+        @if (Printer.IsPrinting)
+        {
+            <div class="row mb-2">
+                <div class="progress w-100">
+                    <div class="progress-bar bg-secondary progress-bar-striped progress-bar-animated"
+                         role="progressbar"
+                         aria-valuenow="@(printingInformation?.Current / printingInformation?.Total ?? 0)"
+                         aria-valuemin="0"
+                         aria-valuemax="100"
+                         style="width: @(printingInformation?.Current / printingInformation?.Total ?? 0)%">
+                        @(printingInformation?.Current / printingInformation?.Total ?? 0)%
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row mb-2">
-            <h6>Current Command: @CurrentGCodeCommand</h6>
-        </div>
-        <div class="row mb-2">
-            <h6>Commands: @(LinesPrinted) / @(LinesTotalCount)</h6>
-        </div>
+            <div class="row mb-2">
+                <h6>Current Command: @CurrentGCodeCommand</h6>
+            </div>
+            <div class="row mb-2">
+                <h6>Commands: @(printingInformation?.Current) / @(printingInformation?.Total)</h6>
+            </div>
+        }
     </LeftSideContent>
     <RightSideContent>
         <div class="row mb-2">
@@ -51,9 +58,9 @@
         </div>
         <div class="row mb-2 ml-1">
             <select class="custom-select" size="5">
-                @foreach (var file in PrintFiles)
+                @foreach (var filename in filesInformation?.Filenames ?? Array.Empty<string>())
                 {
-                    <option value="file">@(file)</option>
+                    <option value="file">@(filename)</option>
                 }
             </select>
         </div>
@@ -61,58 +68,50 @@
             <div class="col-xl-8">
                 <h6 class="text-center">Select file and start print:</h6>
             </div>
-            <div class="col-xl-4">
-                <button type="button" class="btn btn-secondary oi oi-check w-100"> Start</button>
-            </div>
+            @if(!Printer.IsPrinting)
+            {
+                <div class="col-xl-4">
+                    <button type="button" class="btn btn-secondary oi oi-check w-100"> Start</button>
+                </div>
+            }
         </div>
     </RightSideContent>
 </DoubleSideTile>
 
 @code
 {
-    private string PrinterStatus { get; } = "Printing";
+    private PrintingFileInformation filesInformation;
+    private PrintingInformation printingInformation;
 
-    private int PrintingPercent { get; } = 50;
-
-    private bool IsPrinting { get; } = true;
-
-    private string CurrentGCodeCommand { get; } = "G0 X133 Y151 Z10";
+    private string CurrentGCodeCommand { get; } = "-";
 
     private DateTime PrintingStarTime { get; } = DateTime.Now;
 
-    private int LinesTotalCount { get; } = 19730;
-
-    private int LinesPrinted { get; } = 9831;
-
-    private string[] PrintFiles = new[]
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        "./1.gcode",
-        "./22.gcode",
-        "./somelongname.gcode",
-        "./etc.gcode",
-        "./11.gcode",
-        "./222.gcode",
-        "./2somelongname.gcode",
-        "./et1c.gcode"
-    };
-    
-    protected override async Task OnInitializedAsync()
-    {
-        PrintingNotificator.Subscribed(this, PrintingUpdate);
-        PrintingFileNotificator.Subscribed(this, PrintingFileUpdate);
-        
-        await Printer.ExecuteInformationCommand(new GetPrintingFiles());
+        if (firstRender)
+        {
+            
+            PrintingNotificator.Subscribed(this, PrintingUpdate);
+            PrintingFileNotificator.Subscribed(this, PrintingFileUpdate);
 
-        base.OnInitialized();
+            await Printer.ExecuteInformationCommand(new GetPrintingFiles());
+        }
+
+        await base.OnAfterRenderAsync(firstRender);
     }
 
-    private async Task PrintingUpdate(Printer.Models.Information.PrintingInformation data)
+    private async Task PrintingUpdate(PrintingInformation data)
     {
+        printingInformation = data;
+
         await InvokeAsync(this.StateHasChanged);
     }
 
-    private async Task PrintingFileUpdate(Printer.Models.Information.PrintingFileInformation data)
+    private async Task PrintingFileUpdate(PrintingFileInformation data)
     {
+        filesInformation = data;
+
         await InvokeAsync(this.StateHasChanged);
     }
 

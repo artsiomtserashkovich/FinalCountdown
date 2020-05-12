@@ -25,7 +25,7 @@ namespace PrintingMonitor.PrinterConnection.Sender
             var sendCommand = new SendPrinterCommand(_nextCommandLine, command, DateTime.Now);
             _connection.SendCommand(sendCommand.ToStringIncludingChecksum());
 
-            var response = _connection.ReadUntil("ok");
+            var response = command.WaitResponseUntilOK ? _connection.ReadUntil("ok") : ReadWithoutOK();
             IncrementCommandLine();
 
             return new PrinterResponse(sendCommand.SendTime, sendCommand.Command, DateTime.Now, response);
@@ -34,6 +34,12 @@ namespace PrintingMonitor.PrinterConnection.Sender
         private void IncrementCommandLine()
         {
             ++_nextCommandLine;
+        }
+
+        private string ReadWithoutOK()
+        {
+            _connection.ReadLine();
+           return _connection.ReadLine();
         }
     }
 }
