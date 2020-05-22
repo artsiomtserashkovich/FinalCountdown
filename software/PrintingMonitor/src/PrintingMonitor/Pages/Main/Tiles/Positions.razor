@@ -1,8 +1,10 @@
 ﻿@using PrintingMonitor.Printer.Notification
-
+@using PrintingMonitor.Printer
+@using PrintingMonitor.Printer.Models.Commands.Management
 @implements IDisposable
 
 @inject INotificator<Printer.Models.Information.Positions> Notificator;
+@inject IPrinter Printer;
 
 <DoubleSideTile Title="Positions"
                 AlignContentCenter
@@ -26,26 +28,26 @@
     <RightSideContent>
         <div class="row  mb-4">
             <div class="col">
-                <button type="button" class="btn btn-secondary oi oi-home w-100"> Home X</button>
+                <button disabled="@Printer.IsPrinting" @onclick="OnHomingX" type="button" class="btn btn-secondary oi oi-home w-100"> Home X</button>
             </div>
             <div class="col">
-                <button type="button" class="btn btn-secondary oi oi-home w-100"> Home X/Y</button>
+                <button disabled="@Printer.IsPrinting" @onclick="OnHomingXY" type="button" class="btn btn-secondary oi oi-home w-100"> Home X/Y</button>
             </div>
         </div>
         <div class="row  mb-4">
             <div class="col">
-                <button type="button" class="btn btn-secondary oi oi-home w-100"> Home Y</button>
+                <button disabled="@Printer.IsPrinting" @onclick="OnHomingY" type="button" class="btn btn-secondary oi oi-home w-100"> Home Y</button>
             </div>
             <div class="col">
-                <button type="button" class="btn btn-secondary oi oi-home w-100"> Home All</button>
+                <button disabled="@Printer.IsPrinting" @onclick="OnHomingAll" type="button" class="btn btn-secondary oi oi-home w-100"> Home All</button>
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <button type="button" class="btn btn-secondary oi oi-home w-100"> Home Z</button>
+                <button disabled="@Printer.IsPrinting" @onclick="OnHomingZ" type="button" class="btn btn-secondary oi oi-home w-100"> Home Z</button>
             </div>
             <div class="col">
-                <button type="button" class="btn btn-secondary oi oi-justify-center w-100"> Bed leveling</button>
+                <button disabled="@Printer.IsPrinting" @onclick="OnBedLeveling" type="button" class="btn btn-secondary oi oi-justify-center w-100"> Bed leveling</button>
             </div>
         </div>
     </RightSideContent>
@@ -68,6 +70,36 @@
         await InvokeAsync(this.StateHasChanged);
     }
 
+    private async Task OnHomingX(MouseEventArgs e)
+    {
+        await Printer.ExecuteManagementCommand(new HomingCommand(HomingDirection.X));
+    }
+
+    private async Task OnHomingY(MouseEventArgs e)
+    {
+        await Printer.ExecuteManagementCommand(new HomingCommand(HomingDirection.Y));
+    }
+    
+    private async Task OnHomingXY(MouseEventArgs e)
+    {
+        await Printer.ExecuteManagementCommand(new HomingCommand(HomingDirection.XY));
+    }
+    
+    private async Task OnHomingZ(MouseEventArgs e)
+    {
+        await Printer.ExecuteManagementCommand(new HomingCommand(HomingDirection.Z));
+    }
+    
+    private async Task OnHomingAll(MouseEventArgs e)
+    {
+        await Printer.ExecuteManagementCommand(new HomingCommand(HomingDirection.ALL));
+    }
+    
+    private async Task OnBedLeveling(MouseEventArgs e)
+    {
+        await Printer.ExecuteManagementCommand(new BedLevelingCommand());
+    }
+    
     public void Dispose()
     {
         Notificator.Unsubscribed(this);

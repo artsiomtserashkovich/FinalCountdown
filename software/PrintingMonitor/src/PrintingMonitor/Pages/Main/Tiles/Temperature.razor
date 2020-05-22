@@ -1,8 +1,11 @@
 ﻿@using PrintingMonitor.Printer.Models.Information
 @using PrintingMonitor.Printer.Notification
+@using PrintingMonitor.Printer
+@using PrintingMonitor.Printer.Models.Commands.Management
 
 @implements IDisposable
 
+@inject IPrinter Printer
 @inject INotificator<Temperatures> Notificator
 
 <DoubleSideTile Title="Temperature"
@@ -21,7 +24,7 @@
             <h6>Hotend Temperature:</h6>
         </div>
         <div class="row d-flex justify-content-center">
-            <h6>Current: @(temperatures?.HotendCurrent?.ToString() ?? "-"); Target: @(temperatures?.HotendTarget?.ToString() ?? "-")</h6>
+            <h6>Current: @(temperatures?.HotendCurrent?.ToString() ?? "-"); Target: x@(temperatures?.HotendTarget?.ToString() ?? "-")</h6>
         </div>
     </LeftSideContent>
     <RightSideContent>
@@ -30,13 +33,13 @@
         </div>
         <div class="row  mb-4">
             <div class="col-xl-5">
-                <input class="form-control" type="number" value="42">
+                <input disabled="@Printer.IsPrinting" class="form-control" type="number" @bind="BedTemperature">
             </div>
             <div class="col-xl-3 mb-1">
-                <button type="button" class="btn btn-secondary oi oi-check w-100"> Set</button>
+                <button disabled="@Printer.IsPrinting" @onclick="OnBedSet" type="button" class="btn btn-secondary oi oi-check w-100"> Set</button>
             </div>
             <div class="col-xl-4">
-                <button type="button" class="btn btn-secondary oi oi-x w-100"> Turn off</button>
+                <button disabled="@Printer.IsPrinting" @onclick="OnBedOff" type="button" class="btn btn-secondary oi oi-x w-100"> Turn off</button>
             </div>
         </div>
         <div class="row d-flex justify-content-center">
@@ -44,13 +47,13 @@
         </div>
         <div class="row  mb-4">
             <div class="col-xl-5">
-                <input class="form-control" type="number" value="42">
+                <input disabled="@Printer.IsPrinting" class="form-control" type="number" @bind="HotTemperature">
             </div>
             <div class="col-xl-3 mb-1">
-                <button type="button" class="btn btn-secondary oi oi-check w-100"> Set</button>
+                <button disabled="@Printer.IsPrinting" @onclick="OnHotSet" type="button" class="btn btn-secondary oi oi-check w-100"> Set</button>
             </div>
             <div class="col-xl-4">
-                <button type="button" class="btn btn-secondary oi oi-x w-100"> Turn off</button>
+                <button disabled="@Printer.IsPrinting" @onclick="OnHotOff" type="button" class="btn btn-secondary oi oi-x w-100"> Turn off</button>
             </div>
         </div>
         <div class="row d-flex justify-content-center">
@@ -58,13 +61,13 @@
         </div>
         <div class="row">
             <div class="col-xl-5">
-                <input class="form-control" type="number" value="42">
+                <input disabled="@Printer.IsPrinting" class="form-control" type="number" @bind="FanSpeed">
             </div>
             <div class="col-xl-3 mb-1">
-                <button type="button" class="btn btn-secondary oi oi-check w-100"> Set</button>
+                <button disabled="@Printer.IsPrinting" @onclick="OnFanSet" type="button" class="btn btn-secondary oi oi-check w-100"> Set</button>
             </div>
             <div class="col-xl-4">
-                <button type="button" class="btn btn-secondary oi oi-x w-100"> Turn off</button>
+                <button disabled="@Printer.IsPrinting" @onclick="OnFanOff" type="button" class="btn btn-secondary oi oi-x w-100"> Turn off</button>
             </div>
         </div>
     </RightSideContent>
@@ -72,6 +75,15 @@
 
 @code 
 {
+    [Parameter]
+    public int FanSpeed { get; set; } = 42;
+    
+    [Parameter]
+    public int BedTemperature { get; set; } = 42;
+    
+    [Parameter]
+    public int HotTemperature { get; set; } = 42;
+    
     private Temperatures temperatures;
 
     protected override void OnInitialized()
@@ -86,6 +98,36 @@
         temperatures = data;
 
         await InvokeAsync(this.StateHasChanged);
+    }
+
+    private async Task OnBedSet(MouseEventArgs e)
+    {
+        await Printer.ExecuteManagementCommand(new SetTemperaturesCommand(TemperatureDevice.Bed, BedTemperature));
+    }
+
+    private async Task OnBedOff(MouseEventArgs e)
+    {
+        await Printer.ExecuteManagementCommand(new SetTemperaturesCommand(TemperatureDevice.Bed, 0));
+    }
+
+    private async Task OnHotOff(MouseEventArgs e)
+    {
+        await Printer.ExecuteManagementCommand(new SetTemperaturesCommand(TemperatureDevice.Hotend, 0));
+    }
+
+    private async Task OnHotSet(MouseEventArgs e)
+    {
+        await Printer.ExecuteManagementCommand(new SetTemperaturesCommand(TemperatureDevice.Hotend, HotTemperature));
+    }
+
+    private async Task OnFanOff(MouseEventArgs e)
+    {
+        await Printer.ExecuteManagementCommand(new SetFanSpeedCommand(0));
+    }
+
+    private async Task OnFanSet(MouseEventArgs e)
+    {
+        await Printer.ExecuteManagementCommand(new SetFanSpeedCommand(FanSpeed));
     }
 
     public void Dispose()
