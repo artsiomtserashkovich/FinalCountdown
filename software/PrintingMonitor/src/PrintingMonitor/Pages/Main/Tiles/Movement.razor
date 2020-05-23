@@ -1,4 +1,9 @@
-﻿<DoubleSideTile Title="Movement" SizeClasses="col-xl-4 col-md-6 mb-4">
+﻿@using PrintingMonitor.Printer
+@using PrintingMonitor.Printer.Models.Commands.Management
+
+@inject IPrinter Printer
+
+<DoubleSideTile Title="Movement" SizeClasses="col-xl-4 col-md-6 mb-4">
     <LeftSideContent>
         <div class="row mb-4">
             <div class="col">
@@ -7,20 +12,20 @@
                 </div>
                 <div class="row m-2">
                     <div class="col d-flex justify-content-center">
-                        <button type="button" class="btn btn-dark oi oi-arrow-thick-top px-6 py-2" />
+                        <button disabled="@Printer.IsPrinting" @onclick="OnXUpMove" type="button" class="btn btn-dark oi oi-arrow-thick-top px-6 py-2"/>
                     </div>
                 </div>
                 <div class="row m-2">
                     <div class="col d-flex justify-content-end mr-2">
-                        <button type="button" class="btn btn-dark oi oi-arrow-thick-left" />
+                        <button disabled="@Printer.IsPrinting" @onclick="OnYUpMove" type="button" class="btn btn-dark oi oi-arrow-thick-left"/>
                     </div>
                     <div class="col d-flex justify-content-start ml-2">
-                        <button type="button" class="btn btn-dark oi oi-arrow-thick-right" />
+                        <button disabled="@Printer.IsPrinting" @onclick="OnYDownMove" type="button" class="btn btn-dark oi oi-arrow-thick-right"/>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col d-flex justify-content-center">
-                        <button type="button" class="btn btn-dark oi oi-arrow-thick-bottom px-6 py-2" />
+                        <button disabled="@Printer.IsPrinting" @onclick="OnXDownMove" type="button" class="btn btn-dark oi oi-arrow-thick-bottom px-6 py-2"/>
                     </div>
                 </div>
             </div>
@@ -31,7 +36,7 @@
             </div>
             <div class="w-100"></div>
             <div class="col">
-                <select class="form-control form-control-sm">
+                <select disabled="@Printer.IsPrinting" @bind="SelectedXY" class="form-control form-control-sm">
                     <option>0.1</option>
                     <option>1</option>
                     <option>10</option>
@@ -48,10 +53,10 @@
                 </div>
                 <div class="row m-2">
                     <div class="col d-flex justify-content-end mr-2">
-                        <button type="button" class="btn btn-dark oi oi-arrow-thick-left" />
+                        <button disabled="@Printer.IsPrinting" @onclick="OnZUpMove" type="button" class="btn btn-dark oi oi-arrow-thick-left"/>
                     </div>
                     <div class="col d-flex justify-content-start ml-2">
-                        <button type="button" class="btn btn-dark oi oi-arrow-thick-right" />
+                        <button disabled="@Printer.IsPrinting" @onclick="OnZDownMove" type="button" class="btn btn-dark oi oi-arrow-thick-right"/>
                     </div>
                 </div>
                 <div class="row m-2 d-box justify-content-center">
@@ -59,10 +64,10 @@
                 </div>
                 <div class="row m-2">
                     <div class="col d-flex justify-content-end mr-2">
-                        <button type="button" class="btn btn-dark oi oi-arrow-thick-left" />
+                        <button disabled="@Printer.IsPrinting" @onclick="OnExtruderUpMove" type="button" class="btn btn-dark oi oi-arrow-thick-left"/>
                     </div>
                     <div class="col d-flex justify-content-start ml-2">
-                        <button type="button" class="btn btn-dark oi oi-arrow-thick-right" />
+                        <button disabled="@Printer.IsPrinting" @onclick="OnExtruderDownMove" type="button" class="btn btn-dark oi oi-arrow-thick-right"/>
                     </div>
                 </div>
             </div>
@@ -73,7 +78,7 @@
             </div>
             <div class="w-100"></div>
             <div class="col">
-                <select class="form-control form-control-sm">
+                <select disabled="@Printer.IsPrinting" @bind="SelectedZExtruder" class="form-control form-control-sm">
                     <option>0.1</option>
                     <option>1</option>
                     <option>10</option>
@@ -83,3 +88,52 @@
         </div>
     </RightSideContent>
 </DoubleSideTile>
+
+@code
+{
+    [Parameter]
+    public int SelectedZExtruder { get; set; }
+
+    [Parameter]
+    public int SelectedXY { get; set; }
+
+    private async Task OnXUpMove(MouseEventArgs e)
+    {
+        await Printer.ExecuteManagementCommand(new MoveCommand(MoveDirection.Up, SelectedXY));
+    }
+
+    private async Task OnXDownMove(MouseEventArgs e)
+    {
+        await Printer.ExecuteManagementCommand(new MoveCommand(MoveDirection.Down, SelectedXY));
+    }
+
+    private async Task OnYUpMove(MouseEventArgs e)
+    {
+        await Printer.ExecuteManagementCommand(new MoveCommand(MoveDirection.Left, SelectedXY));
+    }
+
+    private async Task OnYDownMove(MouseEventArgs e)
+    {
+        await Printer.ExecuteManagementCommand(new MoveCommand(MoveDirection.Right, SelectedXY));
+    }
+
+    private async Task OnZUpMove(MouseEventArgs e)
+    {
+        await Printer.ExecuteManagementCommand(new MoveCommand(MoveDirection.ZUp, SelectedZExtruder));
+    }
+
+    private async Task OnZDownMove(MouseEventArgs e)
+    {
+        await Printer.ExecuteManagementCommand(new MoveCommand(MoveDirection.ZDown, SelectedZExtruder));
+    }
+
+    private async Task OnExtruderUpMove(MouseEventArgs e)
+    {
+        await Printer.ExecuteManagementCommand(new MoveCommand(MoveDirection.ExtruderUp, SelectedZExtruder));
+    }
+
+    private async Task OnExtruderDownMove(MouseEventArgs e)
+    {
+        await Printer.ExecuteManagementCommand(new MoveCommand(MoveDirection.ExtruderDown, SelectedZExtruder));
+    }
+}
