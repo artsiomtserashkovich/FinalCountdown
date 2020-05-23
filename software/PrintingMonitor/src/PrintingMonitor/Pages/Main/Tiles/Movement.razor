@@ -12,20 +12,20 @@
                 </div>
                 <div class="row m-2">
                     <div class="col d-flex justify-content-center">
-                        <button disabled="@Printer.IsPrinting" @onclick="OnXUpMove" type="button" class="btn btn-dark oi oi-arrow-thick-top px-6 py-2"/>
+                        <button disabled="@(Printer.IsPrinting || SelectedXY is null)" @onclick="OnXUpMove" type="button" class="btn btn-dark oi oi-arrow-thick-top px-6 py-2"/>
                     </div>
                 </div>
                 <div class="row m-2">
                     <div class="col d-flex justify-content-end mr-2">
-                        <button disabled="@Printer.IsPrinting" @onclick="OnYUpMove" type="button" class="btn btn-dark oi oi-arrow-thick-left"/>
+                        <button disabled="@(Printer.IsPrinting || SelectedXY is null)" @onclick="OnYUpMove" type="button" class="btn btn-dark oi oi-arrow-thick-left"/>
                     </div>
                     <div class="col d-flex justify-content-start ml-2">
-                        <button disabled="@Printer.IsPrinting" @onclick="OnYDownMove" type="button" class="btn btn-dark oi oi-arrow-thick-right"/>
+                        <button disabled="@(Printer.IsPrinting || SelectedXY is null)" @onclick="OnYDownMove" type="button" class="btn btn-dark oi oi-arrow-thick-right"/>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col d-flex justify-content-center">
-                        <button disabled="@Printer.IsPrinting" @onclick="OnXDownMove" type="button" class="btn btn-dark oi oi-arrow-thick-bottom px-6 py-2"/>
+                        <button disabled="@(Printer.IsPrinting || SelectedXY is null)" @onclick="OnXDownMove" type="button" class="btn btn-dark oi oi-arrow-thick-bottom px-6 py-2"/>
                     </div>
                 </div>
             </div>
@@ -53,10 +53,10 @@
                 </div>
                 <div class="row m-2">
                     <div class="col d-flex justify-content-end mr-2">
-                        <button disabled="@Printer.IsPrinting" @onclick="OnZUpMove" type="button" class="btn btn-dark oi oi-arrow-thick-left"/>
+                        <button disabled="@(Printer.IsPrinting || SelectedZExtruder is null)" @onclick="OnZUpMove" type="button" class="btn btn-dark oi oi-arrow-thick-left"/>
                     </div>
                     <div class="col d-flex justify-content-start ml-2">
-                        <button disabled="@Printer.IsPrinting" @onclick="OnZDownMove" type="button" class="btn btn-dark oi oi-arrow-thick-right"/>
+                        <button disabled="@(Printer.IsPrinting || SelectedZExtruder is null)" @onclick="OnZDownMove" type="button" class="btn btn-dark oi oi-arrow-thick-right"/>
                     </div>
                 </div>
                 <div class="row m-2 d-box justify-content-center">
@@ -64,10 +64,10 @@
                 </div>
                 <div class="row m-2">
                     <div class="col d-flex justify-content-end mr-2">
-                        <button disabled="@Printer.IsPrinting" @onclick="OnExtruderUpMove" type="button" class="btn btn-dark oi oi-arrow-thick-left"/>
+                        <button disabled="@(Printer.IsPrinting || SelectedZExtruder is null)" @onclick="OnExtruderUpMove" type="button" class="btn btn-dark oi oi-arrow-thick-left"/>
                     </div>
                     <div class="col d-flex justify-content-start ml-2">
-                        <button disabled="@Printer.IsPrinting" @onclick="OnExtruderDownMove" type="button" class="btn btn-dark oi oi-arrow-thick-right"/>
+                        <button disabled="@(Printer.IsPrinting || SelectedZExtruder is null)" @onclick="OnExtruderDownMove" type="button" class="btn btn-dark oi oi-arrow-thick-right"/>
                     </div>
                 </div>
             </div>
@@ -92,48 +92,56 @@
 @code
 {
     [Parameter]
-    public int SelectedZExtruder { get; set; }
+    public double? SelectedZExtruder { get; set; }
 
     [Parameter]
-    public int SelectedXY { get; set; }
+    public double? SelectedXY { get; set; }
 
     private async Task OnXUpMove(MouseEventArgs e)
     {
-        await Printer.ExecuteManagementCommand(new MoveCommand(MoveDirection.Up, SelectedXY));
+        if (!(SelectedXY is null))
+            await Printer.ExecuteManagementCommand(new MoveCommand(MoveDirection.Up, SelectedXY.Value));
     }
 
     private async Task OnXDownMove(MouseEventArgs e)
     {
-        await Printer.ExecuteManagementCommand(new MoveCommand(MoveDirection.Down, SelectedXY));
+        if (!(SelectedXY is null))
+            await Printer.ExecuteManagementCommand(new MoveCommand(MoveDirection.Down, SelectedXY.Value));
     }
 
     private async Task OnYUpMove(MouseEventArgs e)
     {
-        await Printer.ExecuteManagementCommand(new MoveCommand(MoveDirection.Left, SelectedXY));
+        if (!(SelectedXY is null))
+            await Printer.ExecuteManagementCommand(new MoveCommand(MoveDirection.Left, SelectedXY.Value));
     }
 
     private async Task OnYDownMove(MouseEventArgs e)
     {
-        await Printer.ExecuteManagementCommand(new MoveCommand(MoveDirection.Right, SelectedXY));
+        if (!(SelectedXY is null))
+            await Printer.ExecuteManagementCommand(new MoveCommand(MoveDirection.Right, SelectedXY.Value));
     }
 
     private async Task OnZUpMove(MouseEventArgs e)
     {
-        await Printer.ExecuteManagementCommand(new MoveCommand(MoveDirection.ZUp, SelectedZExtruder));
+        if (!(SelectedZExtruder is null))
+            await Printer.ExecuteManagementCommand(new MoveCommand(MoveDirection.ZUp, SelectedZExtruder.Value));
     }
 
     private async Task OnZDownMove(MouseEventArgs e)
     {
-        await Printer.ExecuteManagementCommand(new MoveCommand(MoveDirection.ZDown, SelectedZExtruder));
+        if (!(SelectedZExtruder is null))
+            await Printer.ExecuteManagementCommand(new MoveCommand(MoveDirection.ZDown, SelectedZExtruder.Value));
     }
 
     private async Task OnExtruderUpMove(MouseEventArgs e)
     {
-        await Printer.ExecuteManagementCommand(new MoveCommand(MoveDirection.ExtruderUp, SelectedZExtruder));
+        if (!(SelectedZExtruder is null))
+            await Printer.ExecuteManagementCommand(new MoveCommand(MoveDirection.ExtruderUp, SelectedZExtruder.Value));
     }
 
     private async Task OnExtruderDownMove(MouseEventArgs e)
     {
-        await Printer.ExecuteManagementCommand(new MoveCommand(MoveDirection.ExtruderDown, SelectedZExtruder));
+        if (!(SelectedZExtruder is null))
+            await Printer.ExecuteManagementCommand(new MoveCommand(MoveDirection.ExtruderDown, SelectedZExtruder.Value));
     }
 }

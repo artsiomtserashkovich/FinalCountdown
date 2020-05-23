@@ -45,14 +45,22 @@ namespace PrintingMonitor.ResponseAnalyzer
             {
                 var response = await _responseQueue.GetMessage();
 
-                if (response is null)
+                try
                 {
-                    throw new InvalidOperationException();
+                    if (response is null)
+                    {
+                        throw new InvalidOperationException();
+                    }
+
+                    _logger.LogInformation($"{response} was received.!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
+                    await _responseAnalyzer.Analyze(response);
                 }
-
-                _logger.LogInformation($"{response} was received.");
-
-                await _responseAnalyzer.Analyze(response);
+                catch (Exception exception)
+                {
+                    _logger.LogError(exception, "Error at analyzing");
+                    throw;
+                }
             }
         }
     }

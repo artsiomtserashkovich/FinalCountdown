@@ -24,7 +24,14 @@ namespace PrintingMonitor.Printer.Notification
         {
             foreach (var handler in _handlers)
             {
-                await handler.Value(data);
+                try
+                {
+                    await handler.Value(data);
+                }
+                catch (Exception exception)
+                {
+                    ;
+                }
             }
         }
 

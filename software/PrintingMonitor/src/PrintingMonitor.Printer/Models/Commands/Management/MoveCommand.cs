@@ -2,15 +2,13 @@
 {
     public class MoveCommand : ManagementCommand
     {
-        public MoveDirection Direction { get; }
-
         public MoveCommand(MoveDirection direction, double length)
         {
             Direction = direction;
             Length = length;
         }
 
-        public MoveDirection MoveDirection { get; private set; }
+        public MoveDirection Direction { get; }
 
         public double Length { get; private set; }
     }

@@ -95,7 +95,7 @@
 
     private string CurrentGCodeCommand { get; } = "-";
 
-    private DateTime PrintingStarTime { get; } = DateTime.Now;
+    private DateTime PrintingStarTime { get; set; } = DateTime.Now;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {

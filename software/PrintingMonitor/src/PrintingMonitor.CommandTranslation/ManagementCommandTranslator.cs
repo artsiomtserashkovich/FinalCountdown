@@ -73,42 +73,42 @@ namespace PrintingMonitor.CommandTranslation
         {
             yield return new SetToRelativePositioning();
 
-            switch (moveCommand.MoveDirection)
+            switch (moveCommand.Direction)
             {
                 case MoveDirection.Up:
-                    yield return new LinearMove(moveCommand.Length,0,0,0);
+                    yield return new LinearMove(moveCommand.Length);
                     break;
 
                 case MoveDirection.Down:
-                    yield return new LinearMove(-1 * moveCommand.Length, 0, 0, 0);
+                    yield return new LinearMove(-1 * moveCommand.Length);
                     break;
 
 
                 case MoveDirection.Left:
-                    yield return new LinearMove(0, moveCommand.Length, 0, 0);
+                    yield return new LinearMove(y:moveCommand.Length);
                     break;
 
 
                 case MoveDirection.Right:
-                    yield return new LinearMove(0, -1 * moveCommand.Length, 0, 0);
+                    yield return new LinearMove(y: -1 * moveCommand.Length);
                     break;
 
                 case MoveDirection.ExtruderUp:
-                    yield return new LinearMove(0, 0, 0, moveCommand.Length);
+                    yield return new LinearMove(e: moveCommand.Length);
                     break;
 
 
                 case MoveDirection.ExtruderDown:
-                    yield return new LinearMove(0, 0, 0, -1 * moveCommand.Length);
+                    yield return new LinearMove(e: -1 * moveCommand.Length);
                     break;
 
                 case MoveDirection.ZUp:
-                    yield return new LinearMove(0, 0, moveCommand.Length, 0);
+                    yield return new LinearMove(e: moveCommand.Length);
                     break;
 
 
                 case MoveDirection.ZDown:
-                    yield return new LinearMove(0, 0, -1 * moveCommand.Length, 0);
+                    yield return new LinearMove(z: -1 * moveCommand.Length);
                     break;
             }
 
