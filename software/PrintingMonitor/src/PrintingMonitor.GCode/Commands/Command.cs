@@ -7,6 +7,7 @@ namespace PrintingMonitor.GCode.Commands
     public abstract class Command
     {
         public bool WaitResponseUntilOK { get; }
+
         public CommandType CommandType { get; }
 
         public int CommandId { get; }

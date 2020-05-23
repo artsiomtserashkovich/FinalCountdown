@@ -122,7 +122,7 @@ namespace PrintingMonitor.CommandTranslation
                 yield return new SetHotendTemperature(setTemperaturesCommand.Temperature);
             }
             else
-            {
+            { 
                 yield return new SetBedTemperature(setTemperaturesCommand.Temperature);
             }
         }

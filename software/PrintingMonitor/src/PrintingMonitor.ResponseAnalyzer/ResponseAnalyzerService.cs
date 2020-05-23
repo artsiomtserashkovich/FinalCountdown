@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -43,6 +44,12 @@ namespace PrintingMonitor.ResponseAnalyzer
             while (!stoppingToken.IsCancellationRequested)
             {
                 var response = await _responseQueue.GetMessage();
+
+                if (response is null)
+                {
+                    throw new InvalidOperationException();
+                }
+
                 _logger.LogInformation($"{response} was received.");
 
                 await _responseAnalyzer.Analyze(response);

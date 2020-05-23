@@ -1,6 +1,6 @@
 ﻿namespace PrintingMonitor.Printer.Models.Information
 {
-    public class Positions
+    public class Positions : ResponseInformation
     {
         public double X { get; set; }
 

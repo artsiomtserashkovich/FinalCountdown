@@ -13,20 +13,24 @@ namespace PrintingMonitor.PrinterConnection.Sender
         private readonly IOptions<SerialConnectionOptions> _options;
         private int _nextCommandLine = 1;
 
-        public SingleCommandSenderWithRetry(ICommunicationConnection connection, IOptions<SerialConnectionOptions> _options)
+        public SingleCommandSenderWithRetry(ICommunicationConnection connection, IOptions<SerialConnectionOptions> options)
         {
             _connection = connection;
-            this._options = _options;
+            _options = options;
         }
 
         public PrinterResponse SendCommand(Command command)
         {
-
             var sendCommand = new SendPrinterCommand(_nextCommandLine, command, DateTime.Now);
             _connection.SendCommand(sendCommand.ToStringIncludingChecksum());
 
             var response = command.WaitResponseUntilOK ? _connection.ReadUntil("ok") : ReadWithoutOK();
             IncrementCommandLine();
+
+            if (response is null)
+            {
+                throw new InvalidOperationException();
+            }
 
             return new PrinterResponse(sendCommand.SendTime, sendCommand.Command, DateTime.Now, response);
         }

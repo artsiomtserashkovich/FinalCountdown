@@ -2,7 +2,7 @@
 
 namespace PrintingMonitor.Printer.Models.Information
 {
-    public class ConnectionOutputInformation
+    public class ConnectionOutputInformation : ResponseInformation
     {
         public DateTime CommandSendTime { get; set; }
 

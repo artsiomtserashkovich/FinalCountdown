@@ -1,6 +1,6 @@
 ﻿namespace PrintingMonitor.Printer.Models.Information
 {
-    public class PrintingInformation
+    public class PrintingInformation : ResponseInformation
     {
         public int Total { get; set; }
 

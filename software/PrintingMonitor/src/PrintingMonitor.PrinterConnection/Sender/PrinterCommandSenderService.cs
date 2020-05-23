@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -47,6 +48,11 @@ namespace PrintingMonitor.PrinterConnection.Sender
             {
                 var command = await _commandQueue.GetMessage();
                 _logger.LogInformation($"{command} was received.");
+
+                if (command is null)
+                {
+                    throw new ArgumentNullException();
+                }
 
                 var response = _commandSender.SendCommand(command);
                 _logger.LogInformation($"{response} was received.");

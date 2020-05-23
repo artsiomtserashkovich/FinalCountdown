@@ -3,7 +3,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using PrintingMonitor.GCode.Commands;
-using PrintingMonitor.GCode.Commands.Management;
 using PrintingMonitor.GCode.Commands.Management.Temperature;
 using PrintingMonitor.Printer.Models.Information;
 using PrintingMonitor.Printer.Notification;

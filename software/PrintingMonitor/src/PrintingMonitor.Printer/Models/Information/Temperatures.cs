@@ -1,6 +1,6 @@
 ﻿namespace PrintingMonitor.Printer.Models.Information
 {
-    public class Temperatures
+    public class Temperatures : ResponseInformation
     {
         public double? BedCurrent { get; set; }
 

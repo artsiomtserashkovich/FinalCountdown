@@ -1,6 +1,6 @@
 ﻿namespace PrintingMonitor.Printer.Models.Information
 {
-    public class FirmwareInformation
+    public class FirmwareInformation : ResponseInformation
     {
         public double? FilamentDiameter { get; set; }
 
