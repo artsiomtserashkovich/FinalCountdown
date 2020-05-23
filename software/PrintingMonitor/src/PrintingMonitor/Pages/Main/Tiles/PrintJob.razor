@@ -1,5 +1,6 @@
 ﻿@using PrintingMonitor.Printer
 @using PrintingMonitor.Printer.Models.Commands.Informations
+@using PrintingMonitor.Printer.Models.Commands.Management
 @using PrintingMonitor.Printer.Models.Information
 @using PrintingMonitor.Printer.Notification
 
@@ -45,7 +46,7 @@
                 </div>
             </div>
             <div class="row mb-2">
-                <h6>Current Command: @CurrentGCodeCommand</h6>
+                <h6>Current Command: -</h6>
             </div>
             <div class="row mb-2">
                 <h6>Commands: @(printingInformation?.Current) / @(printingInformation?.Total)</h6>
@@ -71,7 +72,13 @@
             @if(!Printer.IsPrinting)
             {
                 <div class="col-xl-4">
-                    <button type="button" class="btn btn-secondary oi oi-check w-100"> Start</button>
+                    <button disabled="@string.IsNullOrWhiteSpace(SelectedFile)" @onclick="StartPrint" type="button" class="btn btn-secondary oi oi-check w-100"> Start</button>
+                </div>
+            }
+            else
+            {
+                <div class="col-xl-4">
+                    <button @onclick="StopPrint" type="button" class="btn btn-secondary oi oi-check w-100"> Stop</button>
                 </div>
             }
         </div>
@@ -80,6 +87,9 @@
 
 @code
 {
+    [Parameter]
+    public string SelectedFile { get; set; }
+    
     private PrintingFileInformation filesInformation;
     private PrintingInformation printingInformation;
 
@@ -113,6 +123,18 @@
         filesInformation = data;
 
         await InvokeAsync(this.StateHasChanged);
+    }
+
+    private async Task StartPrint(MouseEventArgs e)
+    {
+        PrintingStarTime = DateTime.Now;
+        
+        await Printer.StartPrint(new StartPrintCommand(SelectedFile));
+    }
+
+    private async Task StopPrint(MouseEventArgs e)
+    {
+        await Printer.StopPrint();
     }
 
     public void Dispose()

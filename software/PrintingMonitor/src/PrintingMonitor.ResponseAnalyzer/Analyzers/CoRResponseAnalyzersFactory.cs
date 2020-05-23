@@ -13,9 +13,9 @@ namespace PrintingMonitor.ResponseAnalyzer.Analyzers
 
         public IResponseAnalyzer CreateResponseAnalyzer()
         {
-            //var printingInformationAnalyzer = new PrintingInformationAnalyzer(_provider);
-            //var stopPrintingAnalyzer = new StopPrintingAnalyzer(_provider, printingInformationAnalyzer);
-            var printingFileAnalyzer = new PrintingFileInformationAnalyzer(_provider, null);
+            var printingInformationAnalyzer = new PrintingInformationAnalyzer(_provider);
+            var stopPrintingAnalyzer = new StopPrintingAnalyzer(_provider, printingInformationAnalyzer);
+            var printingFileAnalyzer = new PrintingFileInformationAnalyzer(_provider, stopPrintingAnalyzer);
             var temperaturesAnalyzer = new TemperaturesResponseAnalyzer(_provider, printingFileAnalyzer);
             var positionsAnalyzer = new PositionsResponseAnalyzer(_provider, temperaturesAnalyzer);
             var firmwareInformationAnalyzer = new FirmwareInformationResponseAnalyzer(_provider, positionsAnalyzer);
